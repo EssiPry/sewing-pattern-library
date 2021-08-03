@@ -18,5 +18,20 @@ def login():
         if users.login(username, password): 
             return redirect("/")
         else: 
-            return render_template("error.html", message="Double-check your username and password")
+            return render_template("error.html", message="Please check your username and password")
+        
+@app.route("/register", methods=["GET", "POST"])
+def register(): 
+    if request.method == "GET": 
+        return render_template("register.html")
+    if request.method == "POST": 
+        username = request.form["username"]
+        password1 = request.form["password1"]
+        password2 = request.form["password2"]
+        if password1 != password2: 
+            return render_template("error.html", message="Please make sure your passwords match")
+        if users.register(username, password1):
+            return redirect("/")
+        else: 
+            return render_template("error.html", message="The username is already taken. Please choose a different name")
         
