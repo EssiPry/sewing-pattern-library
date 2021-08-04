@@ -39,3 +39,12 @@ def register():
 def logout():
     users.logout()
     return redirect ("/")
+
+
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    
+    if request.args["pattern_name"]:
+        pattern_name = request.args["pattern_name"]
+
+    return render_template("search.html")

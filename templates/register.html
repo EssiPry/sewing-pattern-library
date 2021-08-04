@@ -1,13 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<h2>Register to the Sewing Pattern library</h2>
+
 <form action="/register" method="POST">
 <p> Username: <br>
 <input type="text" name="username"></p>
 <p>Password: <br>
 <input type="password" name="password1"></p>
 <p>Confirm password:<br>
-<input type="password" name="password2">
+<input type="password" name="password_conf">
 <br>
 <input type="submit" value="Register">
 </form>
