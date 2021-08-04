@@ -1,6 +1,14 @@
 {% extends "layout.html" %}
 {% block content %}
 
+{% if session.user_id %}
+
+Welcome to the Sewing Pattern Library {{session.user_name}}
+
+{% else %}
+
 <p>Brief description of app here</p>
+
+{% endif %}
 
 {% endblock %}

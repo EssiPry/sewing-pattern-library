@@ -1,12 +1,18 @@
 <!DOCTYPE html> 
 
-<title>The Sewing Pattern Library</title> 
+<title>The Sewing Pattern Library </title> 
 
 
 <h2>Sewing Pattern Library</h2>
 <!-- change to a banner at later stage-->
 
-<a href="/login"> Login </a> 
-<a href="/register">Register</a>
+<a href="/login">Login</a>  <a href="/register">Register</a> 
+
+{% if session.user_id %}
+
+<a href="/logout">Logout</a>
+
+{% endif %}
+
 <hr>
 {% block content %}{% endblock %}

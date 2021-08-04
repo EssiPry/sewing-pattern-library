@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, redirect
-import users
+import users, sewingpatterns
 
 @app.route("/")
 def index(): 
@@ -27,11 +27,15 @@ def register():
     if request.method == "POST": 
         username = request.form["username"]
         password1 = request.form["password1"]
-        password2 = request.form["password2"]
-        if password1 != password2: 
+        password_conf = request.form["password_conf"]
+        if password1 != password_conf: 
             return render_template("error.html", message="Please make sure your passwords match")
         if users.register(username, password1):
             return redirect("/")
         else: 
             return render_template("error.html", message="The username is already taken. Please choose a different name")
-        
+
+@app.route("/logout")
+def logout():
+    users.logout()
+    return redirect ("/")
