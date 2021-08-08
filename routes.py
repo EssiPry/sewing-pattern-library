@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, url_for
 import users, sewingpatterns
 
 @app.route("/")
@@ -20,6 +20,11 @@ def login():
         else: 
             return render_template("error.html", message="Please check your username and password")
         
+@app.route("/logout")
+def logout():
+    users.logout()
+    return redirect ("/")
+
 @app.route("/register", methods=["GET", "POST"])
 def register(): 
     if request.method == "GET": 
@@ -35,16 +40,13 @@ def register():
         else: 
             return render_template("error.html", message="The username is already taken. Please choose a different name")
 
-@app.route("/logout")
-def logout():
-    users.logout()
-    return redirect ("/")
-
-
 @app.route("/search", methods=["GET", "POST"])
-def search():
+def search(): 
     
-    if request.args["pattern_name"]:
-        pattern_name = request.args["pattern_name"]
+    if "pattern_name" in request.args:
+        pattern_name = request.args["pattern_name"].lower()
+        results = sewingpatterns.get_pattern_by_name(pattern_name)
+        total = sewingpatterns.count_by_name(pattern_name)
+        return render_template("result.html", total = total, results = results)
 
     return render_template("search.html")
