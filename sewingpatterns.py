@@ -1,13 +1,14 @@
 from db import db
 from flask import session
 
-def get_all_patterns():
-    sql = "SELECT * FROM patterns"
-    return db.session.execute(sql).fetchall()
-
-def count_all_patterns(): 
-    sql = "SELECT COUNT(*) FROM patterns"
-    return db.session.execute(sql).fetchone()[0]
+def add_pattern_to_db(name, company, fabric):
+    try: 
+        sql = "INSERT INTO patterns (name, company, fabric) VALUES (:name, :company, :fabric)"
+        db.session.execute(sql, {"name":name, "company":company, "fabric":fabric})
+        db.session.commit()
+        return True 
+    except: 
+        return False 
 
 def get_pattern_by_name(name):
     name = name 

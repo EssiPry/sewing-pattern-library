@@ -42,11 +42,25 @@ def register():
 
 @app.route("/search", methods=["GET", "POST"])
 def search(): 
-    
     if "pattern_name" in request.args:
         pattern_name = request.args["pattern_name"].lower()
         results = sewingpatterns.get_pattern_by_name(pattern_name)
         total = sewingpatterns.count_by_name(pattern_name)
         return render_template("result.html", total = total, results = results)
-
     return render_template("search.html")
+
+
+@app.route("/add_pattern", methods=["GET", "POST"])
+def add_pattern(): 
+    if request.method == "POST": 
+        pattern_name = request.form["pattern_name"].lower()
+        company = request.form["company"].lower()
+        fabric = request.form["fabric"]
+        if pattern_name and company:
+            if sewingpatterns.add_pattern_to_db(pattern_name, company, fabric): 
+                return render_template("add_pattern.html", message="Pattern added to the library.")
+            else: 
+                return render_template("add_pattern.html", message="Something went wrong. Please check that the pattern is not in the database already.")
+        else: 
+            return render_template("add_pattern.html", message="Please fill in all the fields!") 
+    return render_template("add_pattern.html") 

@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h4>Add a pattern to the database:</h4>
+
+{{message}}
+
+<form action="/add_pattern" method="POST">
+    <p> Pattern name/code: <br>
+    <input type="text" name="pattern_name"></p>
+    <p>Company: <br>
+    <input type="text" name="company"></p>
+    <p>Fabric type:<br>
+    <input type="radio" checked=checked id="fabric1" name="fabric" value=0>
+    <label for="fabric1">Vowen</label>
+    <input type="radio" id="fabric2" name="fabric" value=1>    
+    <label for="fabric2">Knit</label>
+    <p>  
+    <input type="submit" value="Add pattern to database">
+    </form>
+
+{% endblock%}
