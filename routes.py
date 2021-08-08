@@ -60,7 +60,7 @@ def add_pattern():
             if sewingpatterns.add_pattern_to_db(pattern_name, company, fabric): 
                 return render_template("add_pattern.html", message="Pattern added to the library.")
             else: 
-                return render_template("add_pattern.html", message="Something went wrong. Please check that the pattern is not in the database already.")
+                return render_template("add_pattern.html", message="Please check that the pattern is not in the database already.")
         else: 
             return render_template("add_pattern.html", message="Please fill in all the fields!") 
     return render_template("add_pattern.html") 
