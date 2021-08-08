@@ -1,19 +1,16 @@
 {% extends "layout.html"%}
 {% block content %}
 
-
-
 <form action="/search" method="GET">
     Search for a pattern by 
     <br>
     <ul>
         <li>name/code <input type="text" name="pattern_name"></li>
-        <br>
     </ul>
     <input type=submit value="Search"> 
 </form>
 
-<p>In the future you'll be able to add a pattern to your own library</p>
-<p>and if the pattern is not found you can add one to the database!</p>
+<p>In the future you'll be able to add patterns to your own library,
+    and if the pattern is not found you can add one to the database!</p>
 
 {% endblock %}
