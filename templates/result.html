@@ -12,7 +12,7 @@
 <ul>
 {% for result in results: %}
 
-<li>{{result.company}}: {{result.name}}</li>
+<li>{{result.company|capitalize}}: {{result.name|capitalize}}</li>
 
 {% endfor %}
 </ul>

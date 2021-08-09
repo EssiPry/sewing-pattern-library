@@ -32,7 +32,7 @@ def register():
     if request.method == "POST": 
         username = request.form["username"]
         password1 = request.form["password1"]
-        password_conf = request.form["password_conf"]
+        password_conf = request.form["password_conf"] 
         if password1 != password_conf: 
             return render_template("error.html", message="Please make sure your passwords match")
         if users.register(username, password1):
@@ -58,9 +58,9 @@ def add_pattern():
         fabric = request.form["fabric"]
         if pattern_name and company:
             if sewingpatterns.add_pattern_to_db(pattern_name, company, fabric): 
-                return render_template("add_pattern.html", message="Pattern added to the library.")
+                return render_template("add_pattern.html", message="Pattern " + pattern_name + " added to the library.")
             else: 
-                return render_template("add_pattern.html", message="Please check that the pattern is not in the database already.")
+                return render_template("add_pattern.html", message="Please check that the "+ pattern_name.capitalize() +" pattern is not already in the database.")
         else: 
             return render_template("add_pattern.html", message="Please fill in all the fields!") 
     return render_template("add_pattern.html") 
