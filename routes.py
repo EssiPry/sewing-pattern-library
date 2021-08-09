@@ -60,7 +60,12 @@ def add_pattern():
             if sewingpatterns.add_pattern_to_db(pattern_name, company, fabric): 
                 return render_template("add_pattern.html", message="Pattern " + pattern_name + " added to the library.")
             else: 
-                return render_template("add_pattern.html", message="Please check that the "+ pattern_name.capitalize() +" pattern is not already in the database.")
+                return render_template("add_pattern.html", message="Please check that the pattern "+ pattern_name.capitalize() +" is not already in the database.")
         else: 
             return render_template("add_pattern.html", message="Please fill in all the fields!") 
     return render_template("add_pattern.html") 
+
+@app.route("/pattern/<pattern_name>")
+def pattern_page(pattern_name):
+    # hae pattern-tiedot kannasta
+    return render_template("pattern.html", pattern_name = pattern_name)

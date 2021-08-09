@@ -7,15 +7,24 @@
 
 {% else %}
 
+{% if total == 1 %}
+
+<p>There is {{total}} pattern matching your search:</p>
+
+{% else %}
+
 <p>There are {{total}} patterns matching your search:</p>
 
+{% endif %}
 <ul>
 {% for result in results: %}
 
-<li>{{result.company|capitalize}}: {{result.name|capitalize}}</li>
+<li><a href="/pattern/{{result.name|capitalize}}">{{result.company|capitalize}}: {{result.name|capitalize}}</a></li>
 
 {% endfor %}
 </ul>
+
+<p>Not the right pattern? <a href="/add_pattern"> Try adding a new pattern to the database.</a> </p>
 
 {% endif %}
 {% endblock%}
