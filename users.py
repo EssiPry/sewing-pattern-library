@@ -17,6 +17,10 @@ def login(username, password):
             return True 
         return False
 
+def logout():
+    del session["user_id"]
+    del session["user_name"]
+
 def register(username, password): 
     hash_value = generate_password_hash(password)
     try: 
@@ -26,7 +30,3 @@ def register(username, password):
         return True
     except:
         return False
-
-def logout():
-    del session["user_id"]
-    del session["user_name"]
