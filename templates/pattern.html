@@ -1,7 +1,19 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h2>{{pattern_name}}</h2>
+<h2>{{company|capitalize}}: {{pattern_name|capitalize}}</h2>
+
+<!-- button to add to library if not in library else a button to delete from library-->
+
+<p>Fabric type: {{fabric}}</p>
+
+<!-- display if pattern in library 
+<p>Supplies:  </p>
+<p>Notes: </p>
+-->
+
 <p>Reviews: </p>
+
+
 
 {% endblock %}

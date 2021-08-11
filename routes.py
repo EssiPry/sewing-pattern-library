@@ -44,7 +44,7 @@ def register():
 def search(): 
     if "pattern_name" in request.args:
         pattern_name = request.args["pattern_name"].lower()
-        results = sewingpatterns.get_pattern_by_name(pattern_name)
+        results = sewingpatterns.get_patterns_by_name(pattern_name)
         total = sewingpatterns.count_by_name(pattern_name)
         return render_template("result.html", total = total, results = results)
     return render_template("search.html")
@@ -65,7 +65,12 @@ def add_pattern():
             return render_template("add_pattern.html", message="Please fill in all the fields!") 
     return render_template("add_pattern.html") 
 
+
 @app.route("/pattern/<pattern_name>")
 def pattern_page(pattern_name):
-    # hae pattern-tiedot kannasta
-    return render_template("pattern.html", pattern_name = pattern_name)
+    pattern_name = pattern_name.lower()
+    sewing_pattern = sewingpatterns.get_pattern_by_name(pattern_name)
+    if sewing_pattern.fabric == 0: 
+        fabric = "vowen"
+    fabric = "knit" 
+    return render_template("pattern.html", pattern_name = sewing_pattern.name, company = sewing_pattern.company, fabric = fabric)
