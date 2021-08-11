@@ -24,3 +24,8 @@ def get_pattern_by_name(name):
     name = name
     sql = "SELECT * FROM patterns WHERE name = :name"
     return db.session.execute(sql, {"name" : name}).fetchone()
+
+def get_pattern_id(name):
+    name = name
+    sql ="SELECT id FROM patterns WHERE name = :name"
+    return db.session.execute(sql, {"name" : name}).fetchone()[0]

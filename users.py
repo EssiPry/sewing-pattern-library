@@ -21,6 +21,7 @@ def logout():
     del session["user_id"]
     del session["user_name"]
 
+
 def register(username, password): 
     hash_value = generate_password_hash(password)
     try: 
@@ -30,3 +31,6 @@ def register(username, password):
         return True
     except:
         return False
+
+def get_user_id():
+    return session.get("user_id")

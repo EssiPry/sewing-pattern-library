@@ -1,6 +1,6 @@
 from app import app
-from flask import render_template, request, redirect, url_for
-import users, sewingpatterns
+from flask import render_template, request, redirect, session, url_for
+import users, sewingpatterns, reviews
 
 @app.route("/")
 def index(): 
@@ -13,8 +13,7 @@ def login():
 
     if request.method == "POST": 
         username = request.form["username"]
-        password = request.form["password"]
-        
+        password = request.form["password"]            
         if users.login(username, password): 
             return redirect("/")
         else: 
@@ -29,6 +28,7 @@ def logout():
 def register(): 
     if request.method == "GET": 
         return render_template("register.html")
+
     if request.method == "POST": 
         username = request.form["username"]
         password1 = request.form["password1"]
@@ -66,11 +66,17 @@ def add_pattern():
     return render_template("add_pattern.html") 
 
 
-@app.route("/pattern/<pattern_name>")
+@app.route("/pattern/<pattern_name>", methods=["GET", "POST"])
 def pattern_page(pattern_name):
     pattern_name = pattern_name.lower()
-    sewing_pattern = sewingpatterns.get_pattern_by_name(pattern_name)
-    if sewing_pattern.fabric == 0: 
-        fabric = "vowen"
-    fabric = "knit" 
+    sewing_pattern = sewingpatterns.get_pattern_by_name(pattern_name) 
+    fabric = "vowen"
+    if request.method == "POST": 
+        user_id = users.get_user_id()
+        pattern_id = sewingpatterns.get_pattern_id(pattern_name)
+        review = request.form["review"]
+        if reviews.add_review(user_id, pattern_id, review):
+            return redirect("/")
+        else: 
+            return render_template("error.html", message ="Something went wrong, please try again")
     return render_template("pattern.html", pattern_name = sewing_pattern.name, company = sewing_pattern.company, fabric = fabric)
