@@ -6,11 +6,11 @@
 {{message}}
 
 <form action="/add_pattern" method="POST">
-    <p> Pattern name or numerical code: <br>
-    <input type="text" name="pattern_name"></p>
-    <p>Company: <br>
-    <input type="text" name="company"></p>
-    <p>Fabric type:<br>
+    <label for="pattern_name"> Pattern name or code:</label><br>
+    <input type="text" id="pattern_name" name="pattern_name" minlength="3"></p>
+    <label for="company">Company:</label><br>
+    <input type="text" id="company" name="company"></p>
+    <p>Fabric type:</p>
     <input type="radio" checked=checked id="fabric1" name="fabric" value=0>
     <label for="fabric1">Vowen</label>
     <input type="radio" id="fabric2" name="fabric" value=1>    

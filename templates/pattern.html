@@ -7,13 +7,20 @@
 
 <p>Fabric type: {{fabric}}</p>
 
-<!-- display if pattern in library 
+<!-- display if pattern in personal library 
 <p>Supplies:  </p>
-<p>Notes: </p>
+<p>Add note tai Show notes: </p>
 -->
 
 <p>Reviews: </p>
 
 
+<form action="/pattern/" method="POST">
+    <input type="hidden" name="user_id" value = {{session.user_id}} >
+    <label for="review">Add a pattern review:</label><br>
+    <input type="text" name="review" id="review" ><br>
+    <br>
+    <input type="submit" value="Submit review"> 
+</form>
 
 {% endblock %}
