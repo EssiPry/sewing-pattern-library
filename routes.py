@@ -71,6 +71,8 @@ def pattern_page(pattern_name):
     pattern_name = pattern_name.lower()
     sewing_pattern = sewingpatterns.get_pattern_by_name(pattern_name) 
     fabric = "vowen"
+    pattern_reviews = reviews.get_reviews(pattern_name)
+    print(pattern_reviews)
     if request.method == "POST": 
         user_id = users.get_user_id()
         pattern_id = sewingpatterns.get_pattern_id(pattern_name)
@@ -79,4 +81,4 @@ def pattern_page(pattern_name):
             return redirect("/")
         else: 
             return render_template("error.html", message ="Something went wrong, please try again")
-    return render_template("pattern.html", pattern_name = sewing_pattern.name, company = sewing_pattern.company, fabric = fabric)
+    return render_template("pattern.html", pattern_name = sewing_pattern.name, company = sewing_pattern.company, fabric = fabric, reviews = pattern_reviews)

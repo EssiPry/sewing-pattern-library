@@ -14,9 +14,24 @@
 
 <h4>Reviews: </h4>
 
+{% if not reviews %}
+
+<p>There are no reviews for this pattern yet.</p>
+
+{% else %}
+{% for review in reviews: %}
+
+{{review.username}} wrote on {{review.date}}: <br>
+{{review.review}}
+<br>
+<br>
+{% endfor %}
+
+{% endif %}
+
 
 <form action="{{url_for('pattern_page', pattern_name=pattern_name)}}" method="POST">
-    <label for="review">Add a pattern review:</label><br>
+    <label for="review">Review this pattern:</label><br>
     <textarea id="review" name="review" rows="5" cols="45"></textarea><br>
     <br>
     <input type="submit" value="Submit review"> 
