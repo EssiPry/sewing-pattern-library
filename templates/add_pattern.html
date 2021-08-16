@@ -4,7 +4,7 @@
 <h4>Add a pattern to the database:</h4>
 
 {{message}}
-
+<br>
 <form action="/add_pattern" method="POST">
     <label for="pattern_name"> Pattern name or code:</label><br>
     <input type="text" id="pattern_name" name="pattern_name" minlength="3"></p>
@@ -16,6 +16,15 @@
     <input type="radio" id="fabric2" name="fabric" value=1>    
     <label for="fabric2">Knit</label>
     <p>  
+    <p>Garment type:</p>
+    <label for="tops">top</label> 
+    <input type="checkbox" id="tops" name="garment" value="tops">
+    <label for="bottoms">bottom</label>
+    <input type="checkbox" id="bottoms" name="garment" value="bottoms">
+    <label for="dresses">dress</label>
+    <input type="checkbox" id="dresses" name="garment" value="dresses">
+    <br> 
+    <br>   
     <input type="submit" value="Add pattern to database">
     </form>
 
