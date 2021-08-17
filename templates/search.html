@@ -1,15 +1,28 @@
 {% extends "layout.html"%}
 {% block content %}
+<br>
+<br>
 
-<form action="/search" method="GET">
-    Search for a pattern by 
+<form action="/search" method="POST">
+    <h4>Search for pattern by</h4>
+
+    <label for="pattern_name">Name or code: </label><input type="text" id="pattern_name" name="pattern_name"><br>
     <br>
-    <ul>
-        <li>name or code <input type="text" name="pattern_name"></li>
-    </ul>
-    <input type=submit value="Search"> 
+    <label for="company">Company: </label><input type="text" id="company" name="company"><br>
+    <p>Fabric type:</p>
+    <label for="fabric1">All</label>
+    <input type="radio" checked=checked id="fabric1" name="fabric" value ="%">
+    <label for="fabric2">Vowen</label>
+    <input type="radio" id="vowen" name="fabric" value="vowen">
+    <label for="fabric3">Knit</label>
+    <input type="radio" id="knit" name="fabric" value="knit">    
+
+<br>
+<br>
+<input type="submit" value="Search">
 </form>
 
-<p>In the future you'll be able to review patterns, add patterns and personal notes to your library!</p>
+
+<p>In the future you'll be able to add patterns and personal notes to your library!</p>
 
 {% endblock %}

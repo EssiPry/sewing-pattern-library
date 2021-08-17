@@ -42,12 +42,21 @@ def register():
 
 @app.route("/search", methods=["GET", "POST"])
 def search(): 
-    if "pattern_name" in request.args:
-        pattern_name = request.args["pattern_name"].lower()
-        results = sewingpatterns.get_patterns_by_name(pattern_name)
-        total = sewingpatterns.count_by_name(pattern_name)
+    garments = sewingpatterns.get_all_garments()
+    if request.method =="POST": 
+        pattern_name = request.form["pattern_name"].lower()
+        company = request.form["company"].lower()
+        fabric = request.form["fabric"]
+        garments = request.form.getlist("garment")
+        if pattern_name == "": 
+            pattern_name = "%"
+        if company == "": 
+            company = "%"
+        results = sewingpatterns.get_patterns(pattern_name, company, fabric)
+        print("results", results)
+        total = sewingpatterns.count_patterns(pattern_name, company, fabric)
         return render_template("result.html", total = total, results = results)
-    return render_template("search.html")
+    return render_template("search.html", garments = garments)
 
 @app.route("/add_pattern", methods=["GET", "POST"])
 def add_pattern(): 
@@ -74,9 +83,8 @@ def add_pattern():
 def pattern_page(pattern_name):
     pattern_name = pattern_name.lower()
     sewing_pattern = sewingpatterns.get_pattern_by_name(pattern_name) 
-    fabric = "vowen"
+    fabric = "vowen" 
     pattern_reviews = reviews.get_reviews(pattern_name)
-    print(pattern_reviews)
     if request.method == "POST": 
         user_id = users.get_user_id()
         pattern_id = sewingpatterns.get_pattern_id(pattern_name)
