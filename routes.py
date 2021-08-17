@@ -74,7 +74,7 @@ def add_pattern():
             else: 
                 return render_template("add_pattern.html", message="Please check that the pattern "+ pattern_name.capitalize() +" is not already in the database.", garments=garments)
         else: 
-            return render_template("add_pattern.html", message="Please fill in all the fields!", garments=garments) 
+            return render_template("add_pattern.html", message="Please fill in all fields!", garments=garments) 
     return render_template("add_pattern.html", garments=garments) 
 
 
@@ -82,7 +82,7 @@ def add_pattern():
 def pattern_page(pattern_name):
     pattern_name = pattern_name.lower()
     sewing_pattern = sewingpatterns.get_pattern_by_name(pattern_name) 
-    fabric = "vowen" 
+    print(sewing_pattern)
     pattern_reviews = reviews.get_reviews(pattern_name)
     if request.method == "POST": 
         user_id = users.get_user_id()
@@ -92,4 +92,4 @@ def pattern_page(pattern_name):
             return redirect("/")
         else: 
             return render_template("error.html", message ="Something went wrong, please try again")
-    return render_template("pattern.html", pattern_name = sewing_pattern.name, company = sewing_pattern.company, fabric = fabric, reviews = pattern_reviews)
+    return render_template("pattern.html", pattern_name = sewing_pattern.name, company = sewing_pattern.company, fabric = sewing_pattern.fabric, garment=sewing_pattern.garment, reviews = pattern_reviews)
