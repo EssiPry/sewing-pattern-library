@@ -12,6 +12,5 @@ def add_review(user_id, pattern_id, review):
         return False 
 
 def get_reviews(name): 
-    print("allo ", name)
     sql = "SELECT U.username, R.review, R.date FROM reviews R, users U, patterns P WHERE R.user_id=U.id AND R.pattern_id=P.id AND P.name=:name ORDER BY date"
     return db.session.execute(sql, {"name":name}).fetchall() 
