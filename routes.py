@@ -53,7 +53,6 @@ def search():
         if company == "": 
             company = "%"
         results = sewingpatterns.get_patterns(pattern_name, company, fabric)
-        print("results", results)
         total = sewingpatterns.count_patterns(pattern_name, company, fabric)
         return render_template("result.html", total = total, results = results)
     return render_template("search.html", garments = garments)
@@ -71,11 +70,11 @@ def add_pattern():
                 pattern_id = sewingpatterns.get_pattern_id(pattern_name)
                 for garment_id in garment_ids: 
                     sewingpatterns.add_garment_type_to_pattern(pattern_id, garment_id)
-                return render_template("add_pattern.html", message="Pattern " + pattern_name + " added to the library.")
+                return render_template("add_pattern.html", message="Pattern " + pattern_name + " added to the library.", garments=garments)
             else: 
-                return render_template("add_pattern.html", message="Please check that the pattern "+ pattern_name.capitalize() +" is not already in the database.")
+                return render_template("add_pattern.html", message="Please check that the pattern "+ pattern_name.capitalize() +" is not already in the database.", garments=garments)
         else: 
-            return render_template("add_pattern.html", message="Please fill in all the fields!") 
+            return render_template("add_pattern.html", message="Please fill in all the fields!", garments=garments) 
     return render_template("add_pattern.html", garments=garments) 
 
 
