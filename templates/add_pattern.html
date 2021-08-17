@@ -18,13 +18,14 @@
     <p>  
 
     <p>Garment type:</p>
-    <label for="tops">top</label> 
-    <input type="checkbox" id="tops" name="garment" value="tops">
-    <label for="bottoms">bottom</label>
-    <input type="checkbox" id="bottoms" name="garment" value="bottoms">
-    <label for="dresses">dress</label>
-    <input type="checkbox" id="dresses" name="garment" value="dresses">
-    <br> 
+
+    {%for garment in garments: %}
+
+    <label for=>{{garment.garment|capitalize}}</label> 
+    <input type="checkbox" id={{garment.garment}} name="garment" value={{garment.id}}>
+    {% endfor %}
+
+    <br>
     <br>   
     <input type="submit" value="Add pattern to database">
     </form>

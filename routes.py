@@ -60,23 +60,23 @@ def search():
 
 @app.route("/add_pattern", methods=["GET", "POST"])
 def add_pattern(): 
+    garments = sewingpatterns.get_all_garments()
     if request.method == "POST": 
         pattern_name = request.form["pattern_name"].lower()
         company = request.form["company"].lower()
         fabric = request.form["fabric"]
-        garments = request.form.getlist("garment")
+        garment_ids = request.form.getlist("garment")
         if pattern_name and company:
             if sewingpatterns.add_pattern_to_db(pattern_name, company, fabric): 
                 pattern_id = sewingpatterns.get_pattern_id(pattern_name)
-                for garment in garments: 
-                    garment_id=sewingpatterns.get_garment_id(garment)
+                for garment_id in garment_ids: 
                     sewingpatterns.add_garment_type_to_pattern(pattern_id, garment_id)
                 return render_template("add_pattern.html", message="Pattern " + pattern_name + " added to the library.")
             else: 
                 return render_template("add_pattern.html", message="Please check that the pattern "+ pattern_name.capitalize() +" is not already in the database.")
         else: 
             return render_template("add_pattern.html", message="Please fill in all the fields!") 
-    return render_template("add_pattern.html") 
+    return render_template("add_pattern.html", garments=garments) 
 
 
 @app.route("/pattern/<pattern_name>", methods=["GET", "POST"])
