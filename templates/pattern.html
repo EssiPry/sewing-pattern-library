@@ -7,7 +7,12 @@
 
 <p>Garment type: {% for garment in garments: %}{{garment.garment}} {% endfor %}</p>
 
-<!-- display if pattern in personal library 
+<form action="/add_to_my_patterns", method="POST">
+    <input type="hidden" name="pattern_name" value={{pattern_name}}>
+    <button>Add to my patterns</button>
+</form>
+
+<!-- display if pattern in personal library
 <p>Supplies:  </p>
 <p>Add note tai Show notes: </p>
 -->
@@ -33,7 +38,7 @@
     <label for="review">Review this pattern:</label><br>
     <textarea id="review" name="review" rows="5" cols="45"></textarea><br>
     <br>
-    <input type="submit" value="Submit review"> 
+    <input type="submit" value="Submit review">
 </form>
 
 {% endblock %}

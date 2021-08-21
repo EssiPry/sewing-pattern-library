@@ -3,6 +3,7 @@ from flask import render_template, request, redirect
 import users
 import sewingpatterns
 import reviews
+import my_patterns
 
 @app.route("/")
 def index():
@@ -87,3 +88,19 @@ def pattern_page(pattern_name):
             return render_template("pattern.html", pattern_name=sewing_pattern.name, company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments, reviews=pattern_reviews)
         return render_template("error.html", message="Something went wrong, please try again")
     return render_template("pattern.html", pattern_name=sewing_pattern.name, company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments, reviews=pattern_reviews)
+
+@app.route("/add_to_my_patterns", methods=["POST"])
+def add_to_my_patterns():
+    pattern_name=request.form["pattern_name"]
+    pattern_id = sewingpatterns.get_pattern_id(pattern_name)
+    user_id = users.get_user_id()
+    my_patterns.add_to_my_patterns(user_id, pattern_id)
+    return redirect("/")
+
+@app.route("/delete_from_my_patterns", methods=["POST"])
+def add_to_my_patterns():
+    pattern_name=request.form["pattern_name"]
+    pattern_id = sewingpatterns.get_pattern_id(pattern_name)
+    user_id = users.get_user_id()
+    my_patterns.add_to_my_patterns(user_id, pattern_id)
+    return redirect("/")
