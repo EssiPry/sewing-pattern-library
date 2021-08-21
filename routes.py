@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, redirect, session, url_for
-import users, sewingpatterns, reviews
+import users, sewingpatterns, reviews, my_patterns
 
 @app.route("/")
 def index(): 
@@ -42,7 +42,7 @@ def register():
 
 @app.route("/search", methods=["GET", "POST"])
 def search(): 
-    garments = sewingpatterns.get_all_garments()
+    garments = sewingpatterns.get_garment_types()
     if request.method =="POST": 
         pattern_name = request.form["pattern_name"].lower()
         company = request.form["company"].lower()
@@ -59,7 +59,7 @@ def search():
 
 @app.route("/add_pattern", methods=["GET", "POST"])
 def add_pattern(): 
-    garments = sewingpatterns.get_all_garments()
+    garments = sewingpatterns.ge_garment_types()
     if request.method == "POST": 
         pattern_name = request.form["pattern_name"].lower()
         company = request.form["company"].lower()
@@ -77,19 +77,19 @@ def add_pattern():
             return render_template("add_pattern.html", message="Please fill in all fields!", garments=garments) 
     return render_template("add_pattern.html", garments=garments) 
 
-
 @app.route("/pattern/<pattern_name>", methods=["GET", "POST"])
 def pattern_page(pattern_name):
     pattern_name = pattern_name.lower()
     sewing_pattern = sewingpatterns.get_pattern_by_name(pattern_name) 
-    print(sewing_pattern)
+    garments = sewingpatterns.get_garments(pattern_name)
     pattern_reviews = reviews.get_reviews(pattern_name)
     if request.method == "POST": 
         user_id = users.get_user_id()
         pattern_id = sewingpatterns.get_pattern_id(pattern_name)
         review = request.form["review"]
         if reviews.add_review(user_id, pattern_id, review):
-            return redirect("/")
+            pattern_reviews = reviews.get_reviews(pattern_name)
+            return render_template("pattern.html", pattern_name = sewing_pattern.name, company = sewing_pattern.company, fabric = sewing_pattern.fabric, garments= garments, reviews = pattern_reviews)
         else: 
             return render_template("error.html", message ="Something went wrong, please try again")
-    return render_template("pattern.html", pattern_name = sewing_pattern.name, company = sewing_pattern.company, fabric = sewing_pattern.fabric, garment=sewing_pattern.garment, reviews = pattern_reviews)
+    return render_template("pattern.html", pattern_name = sewing_pattern.name, company = sewing_pattern.company, fabric = sewing_pattern.fabric, garments= garments, reviews = pattern_reviews)

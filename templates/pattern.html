@@ -3,10 +3,9 @@
 
 <h2>{{company|capitalize}}: {{pattern_name|capitalize}}</h2>
 
-<!-- button to add to library if not in library else a button to delete from library-->
-
 <p>Fabric type: {{fabric}}</p>
-<p>Garment type: {{garment}}</p>
+
+<p>Garment type: {% for garment in garments: %}{{garment.garment}} {% endfor %}</p>
 
 <!-- display if pattern in personal library 
 <p>Supplies:  </p>
@@ -29,7 +28,6 @@
 {% endfor %}
 
 {% endif %}
-
 
 <form action="{{url_for('pattern_page', pattern_name=pattern_name)}}" method="POST">
     <label for="review">Review this pattern:</label><br>

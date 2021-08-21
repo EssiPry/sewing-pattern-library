@@ -20,7 +20,7 @@ def get_patterns(name, company, fabric):
     return db.session.execute(sql, {"name": "%"+name+"%","company":"%"+company+"%", "fabric": fabric})  
 
 def get_pattern_by_name(name):
-    sql = "SELECT P.name, P.company, P.fabric, G.garment FROM patterns P, garments G, garments_in_pattern A WHERE A.pattern_id=P.id AND A.garment_id=G.id AND name = :name"
+    sql = "SELECT P.name, P.company, P.fabric FROM patterns P WHERE name = :name"
     return db.session.execute(sql, {"name":name}).fetchone()
 
 def count_patterns(name, company, fabric):
@@ -32,10 +32,13 @@ def get_pattern_id(name):
     return db.session.execute(sql, {"name":name}).fetchone()[0]
 
 def get_garment_id(garment):
-    garment = garment
     sql ="SELECT id FROM garments WHERE garment = :garment"
     return db.session.execute(sql, {"garment":garment}).fetchone()[0]
 
-def get_all_garments(): 
-    sql = "SELECT * FROM garments ORDER BY id"
+def get_garments(pattern_name): 
+    sql = "SELECT G.garment FROM garments G, garments_in_pattern A, patterns P WHERE A.garment_id = G.id AND A.pattern_id = P.id AND P.name=:pattern_name"
+    return db.session.execute(sql, {"pattern_name":pattern_name}).fetchall()
+
+def get_garment_types(): 
+    sql = "SELECT garment, id FROM garments ORDER BY id"
     return db.session.execute(sql).fetchall()
