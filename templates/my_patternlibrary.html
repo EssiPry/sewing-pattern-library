@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h4>My patterns</h4>
+
+{% if not my_patterns %}
+
+<p>You don't have any patterns in your library yet. Try <a href="/search">searching</a> for patterns and then adding them to your library</a>. </p>
+
+{% else %}
+
+<ul>
+{% for my_pattern in my_patterns: %}
+
+<li><a href="/pattern/{{my_pattern.name|capitalize}}">{{my_pattern.company|capitalize}}: {{my_pattern.name|capitalize}}</a></li>
+
+{% endfor %}
+</ul>
+
+{% endif %}
+{% endblock%}

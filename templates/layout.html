@@ -1,6 +1,6 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 
-<title>The Sewing Pattern Library </title> 
+<title>The Sewing Pattern Library </title>
 
 
 <h2>Sewing Pattern Library</h2>
@@ -8,13 +8,15 @@
 
 {% if not session.user_id %}
 
-<a href="/login">Login</a>  <a href="/register">Register</a> 
+<a href="/login">Login</a>  <a href="/register">Register</a>
 
 {% else %}
 
 <a href="/search">Pattern search</a>
 
+<a href="/my_patternlibrary">My patterns</a>
+
 <a href="/logout">Logout</a>
 
-{% endif %} 
+{% endif %}
 {% block content %}{% endblock %}
