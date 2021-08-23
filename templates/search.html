@@ -3,9 +3,9 @@
 <br>
 <br>
 
+<h4>Search for pattern by</h4>
 <form action="/search" method="POST">
-    <h4>Search for pattern by</h4>
-
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
     <label for="pattern_name">Name or code: </label><input type="text" id="pattern_name" name="pattern_name"><br>
     <br>
     <label for="company">Company: </label><input type="text" id="company" name="company"><br>
@@ -15,7 +15,7 @@
     <label for="fabric2">Vowen</label>
     <input type="radio" id="vowen" name="fabric" value="vowen">
     <label for="fabric3">Knit</label>
-    <input type="radio" id="knit" name="fabric" value="knit">    
+    <input type="radio" id="knit" name="fabric" value="knit">
 
 <br>
 <br>

@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, session
 import users
 import sewingpatterns
 import reviews
@@ -42,6 +42,8 @@ def register():
 def search():
     garments = sewingpatterns.get_garment_types()
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         pattern_name = request.form["pattern_name"].lower()
         company = request.form["company"].lower()
         fabric = request.form["fabric"]
@@ -59,6 +61,8 @@ def search():
 def add_pattern():
     garments = sewingpatterns.get_garment_types()
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         pattern_name = request.form["pattern_name"].lower()
         company = request.form["company"].lower()
         fabric = request.form["fabric"]
@@ -83,6 +87,8 @@ def pattern_page(pattern_name):
     pattern_id = sewingpatterns.get_pattern_id(pattern_name)
     in_db = my_patterns.in_db(user_id, pattern_id)
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         pattern_id = sewingpatterns.get_pattern_id(pattern_name)
         review = request.form["review"]
         if reviews.add_review(user_id, pattern_id, review):
@@ -100,6 +106,8 @@ def my_patternlibrary():
 
 @app.route("/add_to_my_patterns", methods=["POST"])
 def add_to_my_patterns():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
     pattern_name=request.form["pattern_name"]
     print(pattern_name)
     pattern_id = sewingpatterns.get_pattern_id(pattern_name)
@@ -111,6 +119,8 @@ def add_to_my_patterns():
 
 @app.route("/delete_from_my_patterns", methods=["POST"])
 def delete_from_my_patterns():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
     pattern_name=request.form["pattern_name"]
     pattern_id = sewingpatterns.get_pattern_id(pattern_name)
     user_id = users.get_user_id()

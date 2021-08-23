@@ -1,3 +1,4 @@
+import secrets
 from os import getenv
 from db import db
 from flask import session
@@ -12,12 +13,14 @@ def login(username, password):
     if check_password_hash(user.password, password):
         session["user_id"] = user.id
         session["user_name"] = user.username
+        session["csrf_token"] = secrets.token_hex(16)
         return True
     return False
 
 def logout():
     del session["user_id"]
     del session["user_name"]
+    del session["csrf_token"]
 
 def register(username, password):
     hash_value = generate_password_hash(password)

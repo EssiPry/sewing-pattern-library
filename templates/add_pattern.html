@@ -5,6 +5,7 @@
 {{message}}
 <br>
 <form action="/add_pattern" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
     <label for="pattern_name"> Pattern name or code:</label><br>
     <input type="text" id="pattern_name" name="pattern_name" minlength="3"></p>
     <label for="company">Company:</label><br>
@@ -12,20 +13,20 @@
     <p>Fabric type:</p>
     <input type="radio" checked=checked id="vowen" name="fabric" value="vowen">
     <label for="vowen">Vowen</label>
-    <input type="radio" id="knit" name="fabric" value="knit">    
+    <input type="radio" id="knit" name="fabric" value="knit">
     <label for="knit">Knit</label>
-    <p>  
+    <p>
 
     <p>Garment type:</p>
 
     {%for garment in garments: %}
 
-    <label for=>{{garment.garment|capitalize}}</label> 
+    <label for=>{{garment.garment|capitalize}}</label>
     <input type="checkbox" id={{garment.garment}} name="garment" value={{garment.id}}>
     {% endfor %}
 
     <br>
-    <br>   
+    <br>
     <input type="submit" value="Add pattern to database">
     </form>
 
