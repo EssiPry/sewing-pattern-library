@@ -95,7 +95,8 @@ def pattern_page(pattern_name):
 def my_patternlibrary():
     user_id=users.get_user_id()
     my_sewingpatterns = my_patterns.get_my_patterns(user_id)
-    return render_template("my_patternlibrary.html", my_patterns=my_sewingpatterns)
+    total = my_patterns.count_my_patterns(user_id)
+    return render_template("my_patternlibrary.html", my_patterns=my_sewingpatterns, total = total)
 
 @app.route("/add_to_my_patterns", methods=["POST"])
 def add_to_my_patterns():
