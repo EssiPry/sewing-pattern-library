@@ -10,10 +10,15 @@
 
 <p>You don't have any patterns in your library yet. Try <a href="/search">searching</a> for patterns and then adding them to your library</a>. </p>
 
+{% elif total == 1 %}
+
+<p>You have {{total}} pattern in your library.</p>
+
 {% else %}
 
 <p>You have {{total}} patterns in your library.</p>
 
+{% endif %}
 <ul>
 {% for my_pattern in my_patterns: %}
 
@@ -22,7 +27,6 @@
 {% endfor %}
 </ul>
 
-{% endif %}
         </div>
     </div>
 </div>

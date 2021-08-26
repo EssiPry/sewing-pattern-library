@@ -4,20 +4,17 @@
     <div class="row">
         <div class="col-9">
 
-<h3>Add a pattern to the database:</h3>
+<h3>Add a pattern to the Sewing Pattern Library:</h3>
 {{message}}
 <br>
 <form action="/add_pattern" method="POST">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
     <div class="form-group col-8">
-        <label for="pattern_name">
-            <input type="text" class="form-control" id="pattern_name" name="pattern_name" minlength="3">Pattern name or code:
-        </label>
-        <label for="company">
-            <input type="text" class="form-control" id="company" name="company">Company:
-        </label>
+        <label for="pattern_name">Pattern name or code:</label>
+            <input type="text" class="form-control" id="pattern_name" name="pattern_name" minlength="3">
+        <label for="company">Company:</label>
+            <input type="text" class="form-control" id="company" name="company">
     </div>
-    <br>
     <p>Fabric type:</p>
     <div class="form-check-inline">
         <label for="vowen" class="form-check-inline">
