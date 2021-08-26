@@ -1,19 +1,33 @@
 {% extends "layout.html" %}
 {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-8">
 
-<h2>Register to the Sewing Pattern library</h2>
-
-<p>The username needs to be at between 3-25 characters and the password needs to be at least 3 characters. </p>
+<h3>Register to the Sewing Pattern Library</h3>
 
 <form action="/register" method="POST">
-<label for="username"> Username:</label><br>
-<input type="text" id="username" name="username" minlength="3" maxlength="25"><br>
-<label for="password">Password:</label><br>
-<input type="password" id="password1" name="password1" minlength="3"><br>
-<label for="password_conf">Confirm password:</label><br>
-<input type="password" id="password_conf" name="password_conf" minlength="3"><br>
-<br>
-<input type="submit" value="Register">
+    <div class="form-group col-6">
+        <label for="username"> Username:</label><br>
+        <input type="text" class="form-control" id="username" name="username" minlength="3" maxlength="20">
+        <small class="form-text text-muted">The username must be 3-20 characters long. </small>
+    </div>
+    <div class="form-group col-6">
+        <label for="password">Password:</label><br>
+            <input type="password" class="form-control" id="password1" name="password1" minlength="3" maxlength="20">
+            <small class="form-text text-muted">The password must be 3-20 characters long. </small>
+    </div>
+    <div class="form-group col-6">
+        <label for="password_conf">Confirm password:</label><br>
+            <input type="password" class="form-control" id="password_conf" name="password_conf" minlength="3">
+    </div>
+    <div class="col-6">
+        <input type="submit" class="btn btn-secondary" value="Register">
+    </div>
 </form>
+
+        </div>
+    </div>
+</div>
 
 {% endblock %}

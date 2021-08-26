@@ -1,22 +1,29 @@
 <!DOCTYPE html>
+<head>
+    <title>The Sewing Pattern Library </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
 
-<title>The Sewing Pattern Library </title>
-
-
-<h2>Sewing Pattern Library</h2>
-<!-- change to a banner at later stage-->
-
+<div class="container">
+    <nav class="navbar navbar-expand-sm bg-light sticky-top">
+        <a class="navbar-brand" href="/">Sewing Pattern Library</a>
+        <ul class="navbar-nav">
 {% if not session.user_id %}
 
-<a href="/login">Login</a>  <a href="/register">Register</a>
+<li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+
+<li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
 
 {% else %}
 
-<a href="/search">Pattern search</a>
-
-<a href="/my_patternlibrary">My patterns</a>
-
-<a href="/logout">Logout</a>
+<li class="nav-item"><a class="nav-link" href="/search">Pattern search</a></li>
+<li class="nav-item"><a class="nav-link" href="/my_patternlibrary">My patterns</a></li>
+<li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
 
 {% endif %}
+
+    </ul>
+</nav>
 {% block content %}{% endblock %}

@@ -1,33 +1,54 @@
 {% extends "layout.html" %}
 {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-9">
 
-<h4>Add a pattern to the database:</h4>
+<h3>Add a pattern to the database:</h3>
 {{message}}
 <br>
 <form action="/add_pattern" method="POST">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
-    <label for="pattern_name"> Pattern name or code:</label><br>
-    <input type="text" id="pattern_name" name="pattern_name" minlength="3"></p>
-    <label for="company">Company:</label><br>
-    <input type="text" id="company" name="company"></p>
+    <div class="form-group col-8">
+        <label for="pattern_name">
+            <input type="text" class="form-control" id="pattern_name" name="pattern_name" minlength="3">Pattern name or code:
+        </label>
+        <label for="company">
+            <input type="text" class="form-control" id="company" name="company">Company:
+        </label>
+    </div>
+    <br>
     <p>Fabric type:</p>
-    <input type="radio" checked=checked id="vowen" name="fabric" value="vowen">
-    <label for="vowen">Vowen</label>
-    <input type="radio" id="knit" name="fabric" value="knit">
-    <label for="knit">Knit</label>
-    <p>
+    <div class="form-check-inline">
+        <label for="vowen" class="form-check-inline">
+            <input type="radio" class="form-check-input" checked=checked id="vowen" name="fabric" value="vowen">Vowen
+        </label>
+    </div>
+    <div class="form-check-inline">
+        <label for="knit" class="form-check-inline">
+            <input type="radio" class="form-check-input" id="knit" name="fabric" value="knit">Knit
+        </label>
+    </div>
 
     <p>Garment type:</p>
 
     {%for garment in garments: %}
 
-    <label for=>{{garment.garment|capitalize}}</label>
-    <input type="checkbox" id={{garment.garment}} name="garment" value={{garment.id}}>
+    <div class="form-check-inline">
+        <label class="form-check-label" for=>
+            <input type="checkbox" class="form-check-input" id={{garment.garment}} name="garment" value={{garment.id}}>{{garment.garment|capitalize}}
+        </label>
+    </div>
+
     {% endfor %}
 
     <br>
     <br>
-    <input type="submit" value="Add pattern to database">
-    </form>
+    <input type="submit" class="btn btn-secondary" value="Add pattern to database">
+</form>
 
 {% endblock%}
+
+        </div>
+    </div>
+</div>

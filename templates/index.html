@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-
+<div class="container">
+   <div class="row">
+      <div class="col-8">
 {% if session.user_id %}
 
 <p>Welcome to the Sewing Pattern Library {{session.user_name}}</p>
@@ -8,9 +10,12 @@
 {% else %}
 
 <p>The Sewing Pattern Library helps you to keep track of you patterns!
-   You can search for patterns from the database, save patterns to your library, 
-   add personal notes to patterns, and read other sewists' reviews.   
+   You can search for patterns from the database, save patterns to your library,
+   add personal notes to patterns, and read other sewists' reviews.
 </p>
 
 {% endif %}
+      </div>
+   </div>
+</div>
 {% endblock %}

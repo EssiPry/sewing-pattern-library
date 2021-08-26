@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+
 <h2>{{company|capitalize}}: {{pattern_name|capitalize}}</h2>
 
 <p>Fabric type: {{fabric}}</p>
@@ -12,7 +16,7 @@
 <form action="/add_to_my_patterns", method="POST">
     <input type="hidden" name="pattern_name" value={{pattern_name}}>
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
-    <button>Add to my patterns</button>
+    <button type="button" class="btn btn-info">Add to my patterns</button>
 </form>
 
 {% else %}
@@ -20,7 +24,7 @@
 <form action="/delete_from_my_patterns", method="POST">
     <input type="hidden" name="pattern_name" value={{pattern_name}}>
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
-    <button>Delete from my patterns</button>
+    <button type="button" class="btn btn-info">Delete from my patterns</button>
 </form>
 
 {% endif %}
@@ -29,6 +33,7 @@
 <p>Add note tai Show notes: </p>
 -->
 
+<br>
 <h4>Reviews: </h4>
 
 {% if not reviews %}
@@ -47,11 +52,15 @@
 {% endif %}
 
 <form action="{{url_for('pattern_page', pattern_name=pattern_name)}}" method="POST">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
-    <label for="review">Review this pattern:</label><br>
-    <textarea id="review" name="review" rows="5" cols="45"></textarea><br>
-    <br>
-    <input type="submit" value="Submit review">
+    <div class="form-group">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
+        <label for="review">Review this pattern:</label><br>
+        <textarea class="form-control" id="review" name="review" rows="5" cols="45"></textarea><br>
+        <input type="submit" class="btn btn-secondary" value="Submit review">
+    </div>
 </form>
 
+        </div>
+    </div>
+</div>
 {% endblock %}
