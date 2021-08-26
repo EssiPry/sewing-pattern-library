@@ -16,7 +16,7 @@
 <form action="/add_to_my_patterns", method="POST">
     <input type="hidden" name="pattern_name" value={{pattern_name}}>
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
-    <button type="button" class="btn btn-info">Add to my patterns</button>
+    <input type=submit type="button" class="btn btn-secondary" value="Add to my patterns">
 </form>
 
 {% else %}
@@ -24,7 +24,7 @@
 <form action="/delete_from_my_patterns", method="POST">
     <input type="hidden" name="pattern_name" value={{pattern_name}}>
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
-    <button type="button" class="btn btn-info">Delete from my patterns</button>
+    <input type=submit class="btn btn-secondary" value="Delete from my patterns">
 </form>
 
 {% endif %}
