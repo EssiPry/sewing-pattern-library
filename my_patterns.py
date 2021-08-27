@@ -29,5 +29,5 @@ def in_db(user_id, pattern_id):
     return db.session.execute(sql, {"user_id":user_id, "pattern_id":pattern_id}).fetchone()
 
 def count_my_patterns(user_id):
-    sql = "SELECT COUNT (*) FROM my_patterns WHERE user_id=:user_id"
+    sql = "SELECT COUNT(pattern_id) FROM my_patterns WHERE user_id=:user_id"
     return db.session.execute(sql, {"user_id":user_id}).fetchone()[0]

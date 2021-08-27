@@ -26,7 +26,7 @@ def get_pattern_by_name(name):
     return db.session.execute(sql, {"name":name}).fetchone()
 
 def count_patterns(name, company, fabric):
-    sql = """SELECT COUNT(*)
+    sql = """SELECT COUNT(id)
              FROM patterns
              WHERE name LIKE :name AND company LIKE :company AND fabric LIKE :fabric"""
     return db.session.execute(sql, {"name":"%"+name+"%", "company":"%"+company+"%", "fabric":"%"+fabric+"%"}).fetchone()[0]
@@ -48,3 +48,7 @@ def get_garments(pattern_name):
 def get_garment_types():
     sql = "SELECT garment, id FROM garments ORDER BY id"
     return db.session.execute(sql).fetchall()
+
+def count_companies():
+    sql="SELECT COUNT(DISTINCT company) FROM patterns"
+    return db.session.execute(sql).fetchone()[0]

@@ -7,7 +7,9 @@ import my_patterns
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    patterns_total = sewingpatterns.count_patterns("%", "%", "%")
+    companies_total = sewingpatterns.count_companies()
+    return render_template("index.html", patterns=patterns_total, companies=companies_total)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -28,14 +30,13 @@ def logout():
 def register():
     if request.method == "POST":
         username = request.form["username"]
-        password1 = request.form["password1"]
-        password_conf = request.form["password_conf"]
-        if password1 != password_conf:
-            return render_template("error.html",
-            message="Please make sure your passwords match")
-        if users.register(username, password1):
-            return redirect("/")
-        return render_template("error.html", message="The username is already taken. Please choose a different name")
+        password = request.form["password"]
+        password_confirmation = request.form["password_confirmation"]
+        if password != password_confirmation:
+            return render_template("error.html", message="Please make sure your passwords match")
+        if users.register(username, password):
+            return redirect("/login")
+        return render_template("error.html", message="The username is already in use.  Please choose a different name")
     return render_template("register.html")
 
 @app.route("/search", methods=["GET", "POST"])
@@ -48,10 +49,6 @@ def search():
         company = request.form["company"].lower()
         fabric = request.form["fabric"]
         garments = request.form.getlist("garment")
-        if pattern_name == "":
-            pattern_name = "%"
-        if company == "":
-            company = "%"
         results = sewingpatterns.get_patterns(pattern_name, company, fabric)
         total = sewingpatterns.count_patterns(pattern_name, company, fabric)
         return render_template("result.html", total=total, results=results)
@@ -109,9 +106,7 @@ def add_to_my_patterns():
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
     pattern_name=request.form["pattern_name"]
-    print(pattern_name)
     pattern_id = sewingpatterns.get_pattern_id(pattern_name)
-    print(pattern_id)
     user_id = users.get_user_id()
     if my_patterns.add_to_my_patterns(user_id, pattern_id):
         return redirect("/my_patternlibrary")
@@ -124,7 +119,6 @@ def delete_from_my_patterns():
     pattern_name=request.form["pattern_name"]
     pattern_id = sewingpatterns.get_pattern_id(pattern_name)
     user_id = users.get_user_id()
-    print(user_id, pattern_id)
     if my_patterns.delete_from_my_patterns(user_id, pattern_id):
         return redirect("/")
     return render_template("error.html", message="Something went wrong, please try again")
