@@ -15,3 +15,11 @@ def get_reviews(name):
              FROM reviews R, users U, patterns P
              WHERE R.user_id=U.id AND R.pattern_id=P.id AND P.name=:name ORDER BY date"""
     return db.session.execute(sql, {"name":name}).fetchall()
+
+def count_reviews():
+    sql="SELECT COUNT(review) FROM reviews"
+    return db.session.execute(sql).fetchone()[0]
+
+def count_reviewers():
+    sql="SELECT COUNT(DISTINCT user_id) FROM reviews"
+    return db.session.execute(sql).fetchone()[0]

@@ -9,7 +9,9 @@ import my_patterns
 def index():
     patterns_total = sewingpatterns.count_patterns("%", "%", "%")
     companies_total = sewingpatterns.count_companies()
-    return render_template("index.html", patterns=patterns_total, companies=companies_total)
+    reviews_total = reviews.count_reviews()
+    reviewers_total = reviews.count_reviewers()
+    return render_template("index.html", patterns=patterns_total, companies=companies_total, reviews=reviews_total, reviewers=reviewers_total)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

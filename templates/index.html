@@ -19,7 +19,22 @@
 
       <div class="col-2">
          <h6 class="text-muted">Sewing Pattern Library in numbers</h6>
-         <p> {{patterns}} different patterns from {{companies}} companies</p>
+         <p> {{patterns}} different patterns from {{companies}}
+            {% if companies == 1 %}
+            company
+            {% else %}
+            companies
+            {% endif %}
+            and counting!</p>
+         <p>{{reviews}} reviews by {{reviewers}}
+         {% if reviewers == 1 %}
+         reviewer
+         {% else %}
+         reviewers
+         {% endif %}
+      </p>
+
+
       </div>
    </div>
 </div>
