@@ -89,7 +89,10 @@ def pattern_page(pattern_name):
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
         pattern_id = sewingpatterns.get_pattern_id(pattern_name)
-        review = request.form["review"]
+        review = request.form["review"].strip()
+        if not review:
+            return render_template("pattern.html", pattern_name=sewing_pattern.name, company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments, reviews=pattern_reviews, in_db=in_db,
+            error_message="Please don't leave a blank review.")
         if reviews.add_review(user_id, pattern_id, review):
             pattern_reviews = reviews.get_reviews(pattern_name)
             return render_template("pattern.html", pattern_name=sewing_pattern.name, company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments, reviews=pattern_reviews, in_db=in_db)

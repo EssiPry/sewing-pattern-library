@@ -28,10 +28,6 @@
 </form>
 
 {% endif %}
-<!-- display if pattern in personal library
-<p>Supplies:  </p>
-<p>Add note tai Show notes: </p>
--->
 
 <br>
 <h4>Reviews: </h4>
@@ -50,6 +46,8 @@
 {% endfor %}
 
 {% endif %}
+
+{{error_message}}
 
 <form action="{{url_for('pattern_page', pattern_name=pattern_name)}}" method="POST">
     <div class="form-group">
