@@ -1,5 +1,5 @@
 from app import app
-from flask import abort, render_template, request, redirect, session
+from flask import render_template, request, redirect, session
 import users
 import sewingpatterns
 import reviews
@@ -45,8 +45,7 @@ def register():
 def search():
     garments = sewingpatterns.get_garment_types()
     if request.method == "POST":
-        if session["csrf_token"] != request.form["csrf_token"]:
-            abort(403)
+        users.check_csrf(request.form["csrf_token"])
         pattern_name = request.form["pattern_name"].lower()
         company = request.form["company"].lower()
         fabric = request.form["fabric"]
@@ -60,8 +59,7 @@ def search():
 def add_pattern():
     garments = sewingpatterns.get_garment_types()
     if request.method == "POST":
-        if session["csrf_token"] != request.form["csrf_token"]:
-            abort(403)
+        users.check_csrf(request.form["csrf_token"])
         pattern_name = request.form["pattern_name"].lower()
         company = request.form["company"].lower()
         fabric = request.form["fabric"]
@@ -84,8 +82,7 @@ def pattern_page(pattern_id):
     user_id = users.get_user_id()
     in_my_patterns = my_patterns.in_db(user_id, pattern_id)
     if request.method == "POST":
-        if session["csrf_token"] != request.form["csrf_token"]:
-            abort(403)
+        users.check_csrf(request.form["csrf_token"])
         review = request.form["review"].strip()
         if not review:
             return render_template("pattern.html", pattern_id=pattern_id, pattern_name=sewing_pattern.name, company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments, reviews=pattern_reviews, in_my_patterns=in_my_patterns,
@@ -105,8 +102,7 @@ def my_patternlibrary():
 
 @app.route("/add_to_my_patterns", methods=["POST"])
 def add_to_my_patterns():
-    if session["csrf_token"] != request.form["csrf_token"]:
-        abort(403)
+    users.check_csrf(request.form["csrf_token"])
     pattern_id=request.form["pattern_id"]
     user_id = users.get_user_id()
     if my_patterns.add_to_my_patterns(user_id, pattern_id):
@@ -115,8 +111,7 @@ def add_to_my_patterns():
 
 @app.route("/delete_from_my_patterns", methods=["POST"])
 def delete_from_my_patterns():
-    if session["csrf_token"] != request.form["csrf_token"]:
-        abort(403)
+    users.check_csrf(request.form["csrf_token"])
     pattern_id=request.form["pattern_id"]
     user_id = users.get_user_id()
     if my_patterns.delete_from_my_patterns(user_id, pattern_id):

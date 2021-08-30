@@ -1,7 +1,7 @@
 import secrets
 from os import getenv
 from db import db
-from flask import session
+from flask import abort, session
 from werkzeug.security import check_password_hash, generate_password_hash
 
 def login(username, password):
@@ -34,3 +34,7 @@ def register(username, password):
 
 def get_user_id():
     return session.get("user_id")
+
+def check_csrf(csrf):
+    if session["csrf_token"] != csrf:
+        abort(403)
