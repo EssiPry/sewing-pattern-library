@@ -9,7 +9,12 @@
 
 <p>Fabric type: {{fabric}}</p>
 
-<p>Garment type: {% for garment in garments: %}{{garment.garment}} {% endfor %}</p>
+<p>Garment type: {% for garment in garments: %}
+                    {{garment.garment}}
+                    {% if not loop.last %}
+                    ,
+                    {% endif %}
+                    {% endfor %}</p>
 
 {% if not in_my_patterns %}
 
