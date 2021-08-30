@@ -1,9 +1,20 @@
 from app import app
 from flask import render_template, request, redirect, session
+from functools import wraps
 import users
 import sewingpatterns
 import reviews
 import my_patterns
+
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        print("allo")
+        if "logged_in" in session:
+            return f(*args, **kwargs)
+        else:
+            return redirect("/login")
+    return wrap
 
 @app.route("/")
 def index():
@@ -24,6 +35,7 @@ def login():
     return render_template("login.html")
 
 @app.route("/logout")
+@login_required
 def logout():
     users.logout()
     return redirect("/")
@@ -42,6 +54,7 @@ def register():
     return render_template("register.html")
 
 @app.route("/search", methods=["GET", "POST"])
+@login_required
 def search():
     garments = sewingpatterns.get_garment_types()
     if request.method == "POST":
@@ -56,6 +69,7 @@ def search():
     return render_template("search.html", garments=garments)
 
 @app.route("/add_pattern", methods=["GET", "POST"])
+@login_required
 def add_pattern():
     garments = sewingpatterns.get_garment_types()
     if request.method == "POST":
@@ -75,6 +89,7 @@ def add_pattern():
     return render_template("add_pattern.html", garments=garments)
 
 @app.route("/pattern/<pattern_id>", methods=["GET", "POST"])
+@login_required
 def pattern_page(pattern_id):
     sewing_pattern = sewingpatterns.get_pattern_by_id(pattern_id)
     garments = sewingpatterns.get_garments(pattern_id)
@@ -94,6 +109,7 @@ def pattern_page(pattern_id):
     return render_template("pattern.html", pattern_id=pattern_id, pattern_name=sewing_pattern.name, company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments, reviews=pattern_reviews, in_my_patterns=in_my_patterns)
 
 @app.route("/my_patternlibrary")
+@login_required
 def my_patternlibrary():
     user_id=users.get_user_id()
     my_sewingpatterns = my_patterns.get_my_patterns(user_id)
