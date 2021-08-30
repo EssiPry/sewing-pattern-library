@@ -88,7 +88,7 @@ def pattern_page(pattern_id):
             abort(403)
         review = request.form["review"].strip()
         if not review:
-            return render_template("pattern.html", pattern_name=sewing_pattern.name, company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments, reviews=pattern_reviews, in_my_patterns=in_my_patterns,
+            return render_template("pattern.html", pattern_id=pattern_id, pattern_name=sewing_pattern.name, company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments, reviews=pattern_reviews, in_my_patterns=in_my_patterns,
             error_message="Please don't leave a blank review.")
         if reviews.add_review(user_id, pattern_id, review):
             pattern_reviews = reviews.get_reviews(pattern_id)
