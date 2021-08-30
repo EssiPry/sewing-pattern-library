@@ -4,8 +4,6 @@
     <div class="row">
         <div class="col-8">
 
-
-
 {% block content %}
 
 {% if not results %}
@@ -26,7 +24,7 @@
 <ul>
 {% for result in results: %}
 
-<li><a href="/pattern/{{result.name|capitalize}}">{{result.company|capitalize}}: {{result.name|capitalize}}</a></li>
+<li><a href="/pattern/{{result.id}}">{{result.company|capitalize}}: {{result.name|capitalize}}</a></li>
 
 {% endfor %}
 </ul>

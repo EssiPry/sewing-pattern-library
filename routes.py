@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect, session
+from flask import abort, render_template, request, redirect, session
 import users
 import sewingpatterns
 import reviews
@@ -7,7 +7,7 @@ import my_patterns
 
 @app.route("/")
 def index():
-    patterns_total = sewingpatterns.count_patterns("%", "%", "%")
+    patterns_total = sewingpatterns.count_patterns("", "", "%")
     companies_total = sewingpatterns.count_companies()
     reviews_total = reviews.count_reviews()
     reviewers_total = reviews.count_reviewers()
@@ -76,25 +76,25 @@ def add_pattern():
         return render_template("add_pattern.html", message="Please fill in all fields!", garments=garments)
     return render_template("add_pattern.html", garments=garments)
 
-@app.route("/pattern/<pattern_name>", methods=["GET", "POST"])
-def pattern_page(pattern_name):
-    pattern_name = pattern_name.lower()
-    sewing_pattern = sewingpatterns.get_pattern_by_name(pattern_name)
-    garments = sewingpatterns.get_garments(pattern_name)
-    pattern_reviews = reviews.get_reviews(pattern_name)
+@app.route("/pattern/<pattern_id>", methods=["GET", "POST"])
+def pattern_page(pattern_id):
+    sewing_pattern = sewingpatterns.get_pattern_by_id(pattern_id)
+    garments = sewingpatterns.get_garments(pattern_id)
+    pattern_reviews = reviews.get_reviews(pattern_id)
     user_id = users.get_user_id()
-    pattern_id = sewingpatterns.get_pattern_id(pattern_name)
-    in_db = my_patterns.in_db(user_id, pattern_id)
+    in_my_patterns = my_patterns.in_db(user_id, pattern_id)
     if request.method == "POST":
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
-        pattern_id = sewingpatterns.get_pattern_id(pattern_name)
-        review = request.form["review"]
+        review = request.form["review"].strip()
+        if not review:
+            return render_template("pattern.html", pattern_name=sewing_pattern.name, company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments, reviews=pattern_reviews, in_my_patterns=in_my_patterns,
+            error_message="Please don't leave a blank review.")
         if reviews.add_review(user_id, pattern_id, review):
-            pattern_reviews = reviews.get_reviews(pattern_name)
-            return render_template("pattern.html", pattern_name=sewing_pattern.name, company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments, reviews=pattern_reviews, in_db=in_db)
+            pattern_reviews = reviews.get_reviews(pattern_id)
+            return render_template("pattern.html", pattern_id=pattern_id, pattern_name=sewing_pattern.name, company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments, reviews=pattern_reviews, in_my_patterns=in_my_patterns)
         return render_template("error.html", message="Something went wrong, please try again")
-    return render_template("pattern.html", pattern_name=sewing_pattern.name, company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments, reviews=pattern_reviews, in_db=in_db)
+    return render_template("pattern.html", pattern_id=pattern_id, pattern_name=sewing_pattern.name, company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments, reviews=pattern_reviews, in_my_patterns=in_my_patterns)
 
 @app.route("/my_patternlibrary")
 def my_patternlibrary():
@@ -107,8 +107,7 @@ def my_patternlibrary():
 def add_to_my_patterns():
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
-    pattern_name=request.form["pattern_name"]
-    pattern_id = sewingpatterns.get_pattern_id(pattern_name)
+    pattern_id=request.form["pattern_id"]
     user_id = users.get_user_id()
     if my_patterns.add_to_my_patterns(user_id, pattern_id):
         return redirect("/my_patternlibrary")
@@ -118,8 +117,7 @@ def add_to_my_patterns():
 def delete_from_my_patterns():
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
-    pattern_name=request.form["pattern_name"]
-    pattern_id = sewingpatterns.get_pattern_id(pattern_name)
+    pattern_id=request.form["pattern_id"]
     user_id = users.get_user_id()
     if my_patterns.delete_from_my_patterns(user_id, pattern_id):
         return redirect("/")

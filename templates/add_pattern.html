@@ -5,10 +5,15 @@
         <div class="col-9">
 
 <h3>Add a pattern to the Sewing Pattern Library:</h3>
+
+{%if message %}
+<br>
 {{message}}
 <br>
+{% endif %}
+<br>
 <form action="/add_pattern" method="POST">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
+    <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
     <div class="form-group col-8">
         <label for="pattern_name">Pattern name or code:</label>
             <input type="text" class="form-control" id="pattern_name" name="pattern_name" minlength="3">

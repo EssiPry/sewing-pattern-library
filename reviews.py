@@ -10,11 +10,11 @@ def add_review(user_id, pattern_id, review):
     except:
         return False
 
-def get_reviews(name):
+def get_reviews(pattern_id):
     sql = """SELECT U.username, R.review, R.date
-             FROM reviews R, users U, patterns P
-             WHERE R.user_id=U.id AND R.pattern_id=P.id AND P.name=:name ORDER BY date"""
-    return db.session.execute(sql, {"name":name}).fetchall()
+             FROM reviews R, users U
+             WHERE R.user_id=U.id AND R.pattern_id=:pattern_id ORDER BY date"""
+    return db.session.execute(sql, {"pattern_id":pattern_id}).fetchall()
 
 def count_reviews():
     sql="SELECT COUNT(review) FROM reviews"

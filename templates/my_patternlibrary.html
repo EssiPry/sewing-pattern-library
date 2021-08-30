@@ -22,7 +22,7 @@
 <ul>
 {% for my_pattern in my_patterns: %}
 
-<li><a href="/pattern/{{my_pattern.name|capitalize}}">{{my_pattern.company|capitalize}}: {{my_pattern.name|capitalize}}</a></li>
+<li><a href="/pattern/{{my_pattern.id}}">{{my_pattern.company|capitalize}}: {{my_pattern.name|capitalize}}</a></li>
 
 {% endfor %}
 </ul>

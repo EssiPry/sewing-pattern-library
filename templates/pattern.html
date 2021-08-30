@@ -11,27 +11,23 @@
 
 <p>Garment type: {% for garment in garments: %}{{garment.garment}} {% endfor %}</p>
 
-{% if not in_db %}
+{% if not in_my_patterns %}
 
 <form action="/add_to_my_patterns", method="POST">
-    <input type="hidden" name="pattern_name" value={{pattern_name}}>
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
+    <input type="hidden" name="pattern_id" value={{pattern_id}}>
+    <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
     <input type=submit type="button" class="btn btn-secondary" value="Add to my patterns">
 </form>
 
 {% else %}
 
 <form action="/delete_from_my_patterns", method="POST">
-    <input type="hidden" name="pattern_name" value={{pattern_name}}>
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
+    <input type="hidden" name="pattern_id" value={{pattern_id}}>
+    <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
     <input type=submit class="btn btn-secondary" value="Delete from my patterns">
 </form>
 
 {% endif %}
-<!-- display if pattern in personal library
-<p>Supplies:  </p>
-<p>Add note tai Show notes: </p>
--->
 
 <br>
 <h4>Reviews: </h4>
@@ -51,7 +47,9 @@
 
 {% endif %}
 
-<form action="{{url_for('pattern_page', pattern_name=pattern_name)}}" method="POST">
+{{error_message}}
+
+<form action="{{url_for('pattern_page', pattern_id=pattern_id)}}" method="POST">
     <div class="form-group">
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
         <label for="review">Review this pattern:</label><br>
