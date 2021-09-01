@@ -9,7 +9,6 @@ import my_patterns
 def login_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        print("allo")
         if "logged_in" in session:
             return f(*args, **kwargs)
         else:
@@ -78,14 +77,16 @@ def add_pattern():
         company = request.form["company"].lower()
         fabric = request.form["fabric"]
         garment_ids = request.form.getlist("garment")
-        if pattern_name and company:
+        if pattern_name and company and garment_ids:
             if sewingpatterns.add_pattern_to_db(pattern_name, company, fabric):
                 pattern_id = sewingpatterns.get_pattern_id(pattern_name)
                 for garment_id in garment_ids:
                     sewingpatterns.add_garment_type_to_pattern(pattern_id, garment_id)
-                return render_template("add_pattern.html", message="Pattern " + pattern_name + " added to the library.", garments=garments)
+                user_id=users.get_user_id()
+                my_patterns.add_to_my_patterns(user_id, pattern_id)
+                return render_template("add_pattern.html", message="Pattern " + pattern_name + " added to the library & your patterns.", garments=garments)
             return render_template("add_pattern.html", message="Please check that the pattern "+ pattern_name.capitalize() +" is not already in the database.", garments=garments)
-        return render_template("add_pattern.html", message="Please fill in all fields!", garments=garments)
+        return render_template("add_pattern.html", message="Please fill in all fields and select at least one garment type", garments=garments)
     return render_template("add_pattern.html", garments=garments)
 
 @app.route("/pattern/<pattern_id>", methods=["GET", "POST"])
