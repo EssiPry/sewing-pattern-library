@@ -34,6 +34,23 @@
     </div>
     <br>
     <br>
+    <p>Garment type:</p>
+
+    <div class="form-check-inline">
+        <label for="all" class="form-check-label">
+            <input type="radio" class="form-check-input" checked=checked id="all" name="garment" value="">All types
+        </label>
+    </div>
+    {%for garment in garments: %}
+    <div class="form-check-inline">
+        <label class="form-check-label">
+            <input type="radio" class="form-check-input" id={{garment.garment}} name="garment" value={{garment.id}}>{{garment.garment|capitalize}}
+        </label>
+    </div>
+
+    {% endfor %}
+    <br>
+    <br>
     <input type="submit" class="btn btn-secondary" value="Search">
 </form>
         </div>

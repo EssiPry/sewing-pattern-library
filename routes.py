@@ -61,9 +61,9 @@ def search():
         pattern_name = request.form["pattern_name"].lower()
         company = request.form["company"].lower()
         fabric = request.form["fabric"]
-        garments = request.form.getlist("garment")
-        results = sewingpatterns.get_patterns(pattern_name, company, fabric)
-        total = sewingpatterns.count_patterns(pattern_name, company, fabric)
+        garment_id = request.form["garment"]
+        results = sewingpatterns.get_patterns(pattern_name, company, fabric, garment_id)
+        total = sewingpatterns.count_patterns(pattern_name, company, fabric, garment_id)
         return render_template("result.html", total=total, results=results)
     return render_template("search.html", garments=garments)
 
@@ -76,7 +76,7 @@ def add_pattern():
         pattern_name = request.form["pattern_name"].lower()
         company = request.form["company"].lower()
         fabric = request.form["fabric"]
-        garment_ids = request.form.getlist("garment")
+        garment_id = request.form.getlist("garment")
         if pattern_name and company and garment_ids:
             if sewingpatterns.add_pattern_to_db(pattern_name, company, fabric):
                 pattern_id = sewingpatterns.get_pattern_id(pattern_name)
