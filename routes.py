@@ -17,11 +17,14 @@ def login_required(f):
 
 @app.route("/")
 def index():
-    patterns_total = sewingpatterns.count_patterns("", "", "%")
+    patterns_total = sewingpatterns.count_patterns("", "", "%", "")
     companies_total = sewingpatterns.count_companies()
     reviews_total = reviews.count_reviews()
     reviewers_total = reviews.count_reviewers()
-    return render_template("index.html", patterns=patterns_total, companies=companies_total, reviews=reviews_total, reviewers=reviewers_total)
+    top_three_reviewed = reviews.top_three_reviewed()
+    print(top_three_reviewed)
+    return render_template("index.html", patterns=patterns_total,
+    companies=companies_total, reviews=reviews_total, reviewers=reviewers_total, top_three=top_three_reviewed)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
