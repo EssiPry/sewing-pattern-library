@@ -22,7 +22,6 @@ def index():
     reviews_total = reviews.count_reviews()
     reviewers_total = reviews.count_reviewers()
     top_three_reviewed = reviews.top_three_reviewed()
-    print(top_three_reviewed)
     return render_template("index.html", patterns=patterns_total,
     companies=companies_total, reviews=reviews_total, reviewers=reviewers_total, top_three=top_three_reviewed)
 
@@ -137,3 +136,10 @@ def delete_from_my_patterns():
     if my_patterns.delete_from_my_patterns(user_id, pattern_id):
         return redirect("/")
     return render_template("error.html", message="Something went wrong, please try again")
+
+@app.route("/delete_review", methods=["POST"])
+def delete_review():
+    users.check_csrf(request.form["csrf_token"])
+    review_id = request.form["review_id"]
+    reviews.delete_review(review_id)
+    return redirect(request.referrer)

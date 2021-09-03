@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-8">
 
-<h2>{{company|capitalize}}: {{pattern_name|capitalize}}</h2>
+<h3>{{company|capitalize}}: {{pattern_name|capitalize}}</h3>
 
 <p>Fabric type: {{fabric}}</p>
 
@@ -42,11 +42,21 @@
 <p>There are no reviews for this pattern yet.</p>
 
 {% else %}
-{% for review in reviews: %}
 
+{% for review in reviews: %}
 {{review.username}} wrote on {{review.date}}: <br>
 {{review.review}}
 <br>
+
+{% if session.user_id == review.user_id %}
+<br>
+<form action="/delete_review", method="POST">
+    <input type="hidden" name="review_id" value={{review.id}}>
+    <input type="hidden" name="csrf_token" value={{session.csrf_token}}>
+    <input type=submit class="btn btn-info btn-xs" value="Delete review">
+</form>
+<br>
+{% endif %}
 <br>
 {% endfor %}
 

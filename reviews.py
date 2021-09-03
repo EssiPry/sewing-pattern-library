@@ -13,6 +13,12 @@ def get_reviews(pattern_id):
              WHERE R.user_id=U.id AND R.pattern_id=:pattern_id ORDER BY date"""
     return db.session.execute(sql, {"pattern_id":pattern_id}).fetchall()
 
+def delete_review(review_id):
+    sql = "DELETE FROM reviews WHERE id=:review_id"
+    db.session.execute(sql, {"review_id":review_id})
+    db.session.commit()
+    return True
+
 def count_reviews():
     sql = "SELECT COUNT(review) FROM reviews"
     return db.session.execute(sql).fetchone()[0]
