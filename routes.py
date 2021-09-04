@@ -78,7 +78,7 @@ def add_pattern():
         pattern_name = request.form["pattern_name"].lower()
         company = request.form["company"].lower()
         fabric = request.form["fabric"]
-        garment_id = request.form.getlist("garment")
+        garment_ids = request.form.getlist("garment")
         if pattern_name and company and garment_ids:
             if sewingpatterns.add_pattern_to_db(pattern_name, company, fabric):
                 pattern_id = sewingpatterns.get_pattern_id(pattern_name)
