@@ -33,7 +33,7 @@ def login():
         password = request.form["password"]
         if users.login(username, password):
             return redirect("/")
-        return render_template("error.html", message="Please check your username and password")
+        return render_template("login.html", error_message="Incorrect username or password. Please try again.")
     return render_template("login.html")
 
 @app.route("/logout")
