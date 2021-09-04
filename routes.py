@@ -143,3 +143,21 @@ def delete_review():
     review_id = request.form["review_id"]
     reviews.delete_review(review_id)
     return redirect(request.referrer)
+
+@app.route("/edit_review", methods=["POST"])
+@login_required
+def edit_review():
+    users.check_csrf(request.form["csrf_token"])
+    review_id = request.form["review_id"]
+    review = reviews.get_review_text(review_id)
+    return render_template("edit_review.html", review_id=review_id, review=review)
+
+@app.route("/update_review", methods=["POST"])
+def update_review():
+    users.check_csrf(request.form["csrf_token"])
+    review_id = request.form["review_id"]
+    review = request.form["review"]
+    if not review:
+        return render_template("edit_review.html", review_id=review_id, review=review, error_message="Please don't leave a blank review")
+    reviews.update_review(review_id, review)
+    return redirect ("/my_patternlibrary")

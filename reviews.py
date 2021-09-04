@@ -19,6 +19,16 @@ def delete_review(review_id):
     db.session.commit()
     return True
 
+def update_review(review_id, review):
+    sql = "UPDATE reviews SET review=:review WHERE id=:review_id"
+    db.session.execute(sql, {"review_id":review_id, "review":review})
+    db.session.commit()
+    return True
+
+def get_review_text(review_id):
+    sql = "SELECT review FROM reviews WHERE id=:review_id"
+    return db.session.execute(sql, {"review_id":review_id}).fetchone()[0]
+
 def count_reviews():
     sql = "SELECT COUNT(review) FROM reviews"
     return db.session.execute(sql).fetchone()[0]

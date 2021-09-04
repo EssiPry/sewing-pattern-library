@@ -50,10 +50,18 @@
 
 {% if session.user_id == review.user_id %}
 <br>
-<form action="/delete_review", method="POST">
-    <input type="hidden" name="review_id" value={{review.id}}>
+
+<form action="/edit_review", method="POST">
     <input type="hidden" name="csrf_token" value={{session.csrf_token}}>
-    <input type=submit class="btn btn-info btn-xs" value="Delete review">
+    <input type="hidden" name="review_id" value={{review.id}}>
+    <input type="hidden" name="review" value={{review.review}}>
+    <input type=submit class="btn btn-primary btn-xs" value="Edit review">
+</form>
+<br>
+<form action="/delete_review", method="POST">
+    <input type="hidden" name="csrf_token" value={{session.csrf_token}}>
+    <input type="hidden" name="review_id" value={{review.id}}>
+    <input type=submit class="btn btn-primary btn-xs" value="Delete review">
 </form>
 <br>
 {% endif %}
@@ -66,7 +74,7 @@
 
 <form action="{{url_for('pattern_page', pattern_id=pattern_id)}}" method="POST">
     <div class="form-group">
-        <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
+        <input type="hidden" name="csrf_token" value={{session.csrf_token}}>
         <label for="review">Review this pattern:</label><br>
         <textarea class="form-control" id="review" name="review" rows="5" cols="45"></textarea><br>
         <input type="submit" class="btn btn-secondary" value="Submit review">
