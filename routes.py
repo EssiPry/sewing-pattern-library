@@ -46,14 +46,18 @@ def logout():
 def register():
     if request.method == "POST":
         username = request.form["username"]
+        if len(username) < 3 or len(username) > 20:
+            return render_template("register.html", error_message="Your username needs to be between 3-20 characters.")
         password = request.form["password"]
+        if len(password) < 3 or len(password) > 20:
+            return render_template("register.html", error_message="Your password needs to be between 3-20 characters.")
         password_confirmation = request.form["password_confirmation"]
         if password != password_confirmation:
-            return render_template("error.html", message="Please make sure your passwords match")
+            return render_template("register.html", error_message="Please make sure your passwords match")
         if users.register(username, password):
             return redirect("/login")
         return render_template(
-            "error.html", message="The username is already in use. Please choose a different name")
+            "register.html", error_message="The username is already in use. Please choose a different name.")
     return render_template("register.html")
 
 @app.route("/search", methods=["GET", "POST"])
