@@ -1,6 +1,6 @@
+from functools import wraps
 from app import app
 from flask import render_template, request, redirect, session
-from functools import wraps
 import users
 import sewingpatterns
 import reviews
@@ -22,8 +22,9 @@ def index():
     reviews_total = reviews.count_reviews()
     reviewers_total = reviews.count_reviewers()
     top_three_reviewed = reviews.top_three_reviewed()
-    return render_template("index.html", patterns=patterns_total,
-    companies=companies_total, reviews=reviews_total, reviewers=reviewers_total, top_three=top_three_reviewed)
+    return render_template(
+        "index.html", patterns=patterns_total, companies=companies_total, reviews=reviews_total,
+        reviewers=reviewers_total, top_three=top_three_reviewed)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -51,7 +52,8 @@ def register():
             return render_template("error.html", message="Please make sure your passwords match")
         if users.register(username, password):
             return redirect("/login")
-        return render_template("error.html", message="The username is already in use.  Please choose a different name")
+        return render_template(
+            "error.html", message="The username is already in use. Please choose a different name")
     return render_template("register.html")
 
 @app.route("/search", methods=["GET", "POST"])
@@ -84,11 +86,20 @@ def add_pattern():
                 pattern_id = sewingpatterns.get_pattern_id(pattern_name)
                 for garment_id in garment_ids:
                     sewingpatterns.add_garment_type_to_pattern(pattern_id, garment_id)
-                user_id=users.get_user_id()
+                user_id = users.get_user_id()
                 my_patterns.add_to_my_patterns(user_id, pattern_id)
-                return render_template("add_pattern.html", message="Pattern " + pattern_name + " added to the library & your patterns.", garments=garments)
-            return render_template("add_pattern.html", message="Please check that the pattern "+ pattern_name.capitalize() +" is not already in the database.", garments=garments)
-        return render_template("add_pattern.html", message="Please fill in all fields and select at least one garment type", garments=garments)
+                return render_template(
+                    "add_pattern.html", message="Pattern "
+                    + pattern_name.capitalize() +
+                    " added to the library & your patterns.", garments=garments)
+            return render_template(
+                "add_pattern.html", message="Please check that the pattern "
+                + pattern_name.capitalize() +
+                " is not already in the database.", garments=garments)
+        return render_template(
+            "add_pattern.html",
+            message="Please fill in all fields and select at least one garment type",
+            garments=garments)
     return render_template("add_pattern.html", garments=garments)
 
 @app.route("/pattern/<pattern_id>", methods=["GET", "POST"])
@@ -103,26 +114,35 @@ def pattern_page(pattern_id):
         users.check_csrf(request.form["csrf_token"])
         review = request.form["review"].strip()
         if not review:
-            return render_template("pattern.html", pattern_id=pattern_id, pattern_name=sewing_pattern.name, company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments, reviews=pattern_reviews, in_my_patterns=in_my_patterns,
-            error_message="Please don't leave a blank review.")
+            return render_template(
+                "pattern.html", pattern_id=pattern_id, pattern_name=sewing_pattern.name,
+                company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments,
+                reviews=pattern_reviews, in_my_patterns=in_my_patterns,
+                error_message="Please don't leave a blank review.")
         if reviews.add_review(user_id, pattern_id, review):
             pattern_reviews = reviews.get_reviews(pattern_id)
-            return render_template("pattern.html", pattern_id=pattern_id, pattern_name=sewing_pattern.name, company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments, reviews=pattern_reviews, in_my_patterns=in_my_patterns)
+            return render_template(
+                "pattern.html", pattern_id=pattern_id, pattern_name=sewing_pattern.name,
+                company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments,
+                reviews=pattern_reviews, in_my_patterns=in_my_patterns)
         return render_template("error.html", message="Something went wrong, please try again")
-    return render_template("pattern.html", pattern_id=pattern_id, pattern_name=sewing_pattern.name, company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments, reviews=pattern_reviews, in_my_patterns=in_my_patterns)
+    return render_template(
+        "pattern.html", pattern_id=pattern_id, pattern_name=sewing_pattern.name,
+        company=sewing_pattern.company, fabric=sewing_pattern.fabric, garments=garments,
+        reviews=pattern_reviews, in_my_patterns=in_my_patterns)
 
 @app.route("/my_patternlibrary")
 @login_required
 def my_patternlibrary():
-    user_id=users.get_user_id()
+    user_id = users.get_user_id()
     my_sewingpatterns = my_patterns.get_my_patterns(user_id)
     total = my_patterns.count_my_patterns(user_id)
-    return render_template("my_patternlibrary.html", my_patterns=my_sewingpatterns, total = total)
+    return render_template("my_patternlibrary.html", my_patterns=my_sewingpatterns, total=total)
 
 @app.route("/add_to_my_patterns", methods=["POST"])
 def add_to_my_patterns():
     users.check_csrf(request.form["csrf_token"])
-    pattern_id=request.form["pattern_id"]
+    pattern_id = request.form["pattern_id"]
     user_id = users.get_user_id()
     if my_patterns.add_to_my_patterns(user_id, pattern_id):
         return redirect("/my_patternlibrary")
@@ -131,7 +151,7 @@ def add_to_my_patterns():
 @app.route("/delete_from_my_patterns", methods=["POST"])
 def delete_from_my_patterns():
     users.check_csrf(request.form["csrf_token"])
-    pattern_id=request.form["pattern_id"]
+    pattern_id = request.form["pattern_id"]
     user_id = users.get_user_id()
     if my_patterns.delete_from_my_patterns(user_id, pattern_id):
         return redirect("/")
@@ -158,6 +178,8 @@ def update_review():
     review_id = request.form["review_id"]
     review = request.form["review"]
     if not review:
-        return render_template("edit_review.html", review_id=review_id, review=review, error_message="Please don't leave a blank review")
+        return render_template(
+            "edit_review.html", review_id=review_id, review=review,
+            error_message="Please don't leave a blank review")
     reviews.update_review(review_id, review)
-    return redirect ("/my_patternlibrary")
+    return redirect("/my_patternlibrary")

@@ -16,8 +16,8 @@ def get_patterns(name, company, fabric, garment_id):
              WHERE P.name LIKE :name
              AND P.company LIKE :company
              AND P.fabric LIKE :fabric"""
-        return db.session.execute(sql, {
-        "name": "%"+name+"%", "company":"%"+company+"%", "fabric": fabric}).fetchall()
+        return db.session.execute(
+            sql, {"name": "%"+name+"%", "company":"%"+company+"%", "fabric": fabric}).fetchall()
     sql = """SELECT P.name, P.company, P.fabric, P.id
              FROM patterns P, garments_in_pattern G
              WHERE P.id = G.pattern_id
@@ -25,23 +25,24 @@ def get_patterns(name, company, fabric, garment_id):
              AND P.company LIKE :company
              AND P.fabric LIKE :fabric
              AND G.garment_id = :garment_id"""
-    return db.session.execute(sql, {
-    "name": "%"+name+"%", "company":"%"+company+"%", "fabric": fabric, "garment_id": garment_id}).fetchall()
+    return db.session.execute(
+        sql, {"name": "%"+name+"%", "company":"%"+company+"%", "fabric": fabric,
+              "garment_id": garment_id}).fetchall()
 
-def get_pattern_by_id(id):
-    sql = "SELECT P.name, P.company, P.fabric FROM patterns P WHERE id = :id"
-    return db.session.execute(sql, {"id":id}).fetchone()
+def get_pattern_by_id(pattern_id):
+    sql = "SELECT P.name, P.company, P.fabric FROM patterns P WHERE id = :pattern_id"
+    return db.session.execute(sql, {"pattern_id":pattern_id}).fetchone()
 
 def count_patterns(name, company, fabric, garment_id):
     if not garment_id:
         sql = """SELECT COUNT(id)
                  FROM patterns
-                 WHERE name LIKE :name AND company LIKE :company AND fabric LIKE :fabric"""
-        return db.session.execute(sql, {
-        "name":"%"+name+"%",
-        "company":"%"+company+"%",
-        "fabric":"%"+fabric+"%"
-        }).fetchone()[0]
+                 WHERE name LIKE :name
+                 AND company LIKE :company
+                 AND fabric LIKE :fabric"""
+        return db.session.execute(
+            sql, {"name":"%"+name+"%", "company":"%"+company+"%", "fabric":"%"+fabric+"%"}
+            ).fetchone()[0]
     sql = """SELECT COUNT(P.id)
              FROM patterns P, garments_in_pattern G
              WHERE P.id = G.pattern_id
@@ -49,12 +50,9 @@ def count_patterns(name, company, fabric, garment_id):
              AND P.company LIKE :company
              AND P.fabric LIKE :fabric
              AND G.garment_id = :garment_id"""
-    return db.session.execute(sql, {
-    "name":"%"+name+"%",
-    "company":"%"+company+"%",
-    "fabric":"%"+fabric+"%",
-    "garment_id": garment_id
-    }).fetchone()[0]
+    return db.session.execute(
+        sql, {"name":"%"+name+"%", "company":"%"+company+"%", "fabric":"%"+fabric+"%",
+              "garment_id": garment_id}).fetchone()[0]
 
 def get_pattern_id(name):
     sql = "SELECT id FROM patterns WHERE name = :name"
@@ -65,6 +63,7 @@ def add_garment_type_to_pattern(pattern_id, garment_id):
              VALUES (:pattern_id, :garment_id)"""
     db.session.execute(sql, {"pattern_id":pattern_id, "garment_id":garment_id})
     db.session.commit()
+    return True
 
 def get_garment_id(garment):
     sql = "SELECT id FROM garments WHERE garment = :garment"
@@ -81,5 +80,5 @@ def get_garment_types():
     return db.session.execute(sql).fetchall()
 
 def count_companies():
-    sql="SELECT COUNT(DISTINCT company) FROM patterns"
+    sql = "SELECT COUNT(DISTINCT company) FROM patterns"
     return db.session.execute(sql).fetchone()[0]
