@@ -4,13 +4,14 @@
 <div class="container">
     <div class="row">
         <div class="col-8">
-            <h4>Edit your review:</h4>
+            <h5>Edit your review:</h5>
             {{error_message}}
             <form action="update_review" method="POST">
                 <div class="form-group">
                     <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
                     <input type="hidden" name="review_id" value={{review_id}}>
-                    <textarea class="form-control" id="review" name="review" rows="5" cols="45">{{review}}</textarea><br>
+                    <textarea class="form-control" id="review" name="review" rows="5"
+                        cols="45">{{review}}</textarea><br>
                     <input type="submit" class="btn btn-secondary" value="Save edited review">
                 </div>
             </form>

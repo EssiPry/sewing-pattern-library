@@ -1,31 +1,34 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="container">
+<div class="container p-3">
     <div class="row">
-       <div class="col-8">
+        <div class="col-8">
 
-<h4>My patterns</h4>
+            <h5>My patterns</h5>
+            <br>
 
-{% if not my_patterns %}
+            {% if not my_patterns %}
 
-<p>You don't have any patterns in your library yet. Try <a href="/search">searching</a> for patterns and then adding them to your library</a>. </p>
+            <p>You don't have any patterns in your library yet. Try <a href="/search">searching</a> for patterns and
+                then adding them to your library</a>. </p>
 
-{% elif total == 1 %}
+            {% elif total == 1 %}
 
-<p>You have {{total}} pattern in your library.</p>
+            <p>You have {{total}} pattern in your library:</p>
 
-{% else %}
+            {% else %}
 
-<p>You have {{total}} patterns in your library.</p>
+            <p>You have {{total}} patterns in your library:</p>
 
-{% endif %}
-<ul>
-{% for my_pattern in my_patterns: %}
+            {% endif %}
+            <ul>
+                {% for my_pattern in my_patterns: %}
 
-<li><a href="/pattern/{{my_pattern.id}}">{{my_pattern.company|capitalize}}: {{my_pattern.name|capitalize}}</a></li>
+                <li><a href="/pattern/{{my_pattern.id}}">{{my_pattern.company|capitalize}}:
+                        {{my_pattern.name|capitalize}}</a></li>
 
-{% endfor %}
-</ul>
+                {% endfor %}
+            </ul>
 
         </div>
     </div>

@@ -1,56 +1,57 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="container">
+<div class="container p-3">
     <div class="row">
         <div class="col-10">
 
-<h4>Add a pattern to the Sewing Pattern Library:</h4>
+            <h5>Add a pattern to the Sewing Pattern Library:</h5>
 
-{%if message %}
-<br>
-{{message}}
-<br>
-{% endif %}
-<br>
-<form action="/add_pattern" method="POST">
-    <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
-    <div class="form-group col-8">
-        <label for="pattern_name">Pattern name or code:</label>
-            <input type="text" class="form-control" id="pattern_name" name="pattern_name" minlength="3">
-        <label for="company">Company:</label>
-            <input type="text" class="form-control" id="company" name="company">
-    </div>
-    <p>Fabric type:</p>
-    <div class="form-check-inline">
-        <label for="vowen" class="form-check-inline">
-            <input type="radio" class="form-check-input" checked=checked id="vowen" name="fabric" value="vowen">Vowen
-        </label>
-    </div>
-    <div class="form-check-inline">
-        <label for="knit" class="form-check-inline">
-            <input type="radio" class="form-check-input" id="knit" name="fabric" value="knit">Knit
-        </label>
-    </div>
+            {%if message %}
+            <br>
+            {{message}}
+            <br>
+            {% endif %}
+            <br>
+            <form action="/add_pattern" method="POST">
+                <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
+                <div class="form-group col-8">
+                    <label for="pattern_name">Pattern name or code:</label>
+                    <input type="text" class="form-control" id="pattern_name" name="pattern_name" minlength="3">
+                    <label for="company">Company:</label>
+                    <input type="text" class="form-control" id="company" name="company">
+                </div>
+                <p>Fabric type:</p>
+                <div class="form-check-inline">
+                    <label for="vowen" class="form-check-inline">
+                        <input type="radio" class="form-check-input" checked=checked id="vowen" name="fabric"
+                            value="vowen">Vowen
+                    </label>
+                </div>
+                <div class="form-check-inline">
+                    <label for="knit" class="form-check-inline">
+                        <input type="radio" class="form-check-input" id="knit" name="fabric" value="knit">Knit
+                    </label>
+                </div>
 
-    <p>Garment type:</p>
+                <p>Garment type:</p>
 
-    {%for garment in garments: %}
+                {%for garment in garments: %}
 
-    <div class="form-check-inline">
-        <label class="form-check-label" for=>
-            <input type="checkbox" class="form-check-input" id={{garment.garment}} name="garment" value={{garment.id}}>{{garment.garment|capitalize}}
-        </label>
-    </div>
+                <div class="form-check-inline">
+                    <label class="form-check-label" for=>
+                        <input type="checkbox" class="form-check-input" id={{garment.garment}} name="garment"
+                            value={{garment.id}}>{{garment.garment|capitalize}}
+                    </label>
+                </div>
 
-    {% endfor %}
+                {% endfor %}
 
-    <br>
-    <br>
-    <input type="submit" class="btn btn-secondary" value="Add pattern to database">
-</form>
-
-{% endblock%}
-
+                <br>
+                <br>
+                <input type="submit" class="btn btn-secondary" value="Add pattern to database">
+            </form>
         </div>
     </div>
 </div>
+
+{% endblock%}

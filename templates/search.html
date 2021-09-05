@@ -1,67 +1,71 @@
 {% extends "layout.html"%}
 {% block content %}
-<div class=container>
+<div class=container p-3>
     <div class="row">
         <div class="col-8">
 
-<h4>Search for pattern by</h4>
-<form action="/search" method="POST">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
-    <div class="form-group col-8">
-        <label for="pattern_name">Name or code: </label>
-        <input type="text" class="form-control" id="pattern_name" name="pattern_name"><br>
-    </div>
-    <div class="form-group col-8">
-        <label for="company">Company: </label>
-        <input type="text" class="form-control" id="company" name="company"><br>
-    </div>
+            <h5>Search for pattern by</h5>
+            <br>
+            <form action="/search" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
+                <div class="form-group col-8">
+                    <label for="pattern_name">Name or code: </label>
+                    <input type="text" class="form-control" id="pattern_name" name="pattern_name"><br>
+                </div>
+                <div class="form-group col-8">
+                    <label for="company">Company: </label>
+                    <input type="text" class="form-control" id="company" name="company"><br>
+                </div>
 
-    <p>Fabric type:</p>
-    <div class="form-check-inline">
-        <label for="fabric1" class="form-check-label">
-            <input type="radio" class="form-check-input" checked=checked id="fabric1" name="fabric" value="%">All
-        </label>
-    </div>
-    <div class="form-check-inline">
-        <label for="vowen" class="form-check-label">
-            <input type="radio" class="form-check-input" id="vowen" name="fabric" value="vowen">Vowen
-        </label>
-    </div>
-    <div class="form-check-inline">
-        <label for="knit" class="form-check-label">
-            <input type="radio" class="form-check-input" id="knit" name="fabric" value="knit">Knit
-        </label>
-    </div>
-    <br>
-    <br>
-    <p>Garment type:</p>
+                <p>Fabric type:</p>
+                <div class="form-check-inline">
+                    <label for="fabric1" class="form-check-label">
+                        <input type="radio" class="form-check-input" checked=checked id="fabric1" name="fabric"
+                            value="%">All
+                    </label>
+                </div>
+                <div class="form-check-inline">
+                    <label for="vowen" class="form-check-label">
+                        <input type="radio" class="form-check-input" id="vowen" name="fabric" value="vowen">Vowen
+                    </label>
+                </div>
+                <div class="form-check-inline">
+                    <label for="knit" class="form-check-label">
+                        <input type="radio" class="form-check-input" id="knit" name="fabric" value="knit">Knit
+                    </label>
+                </div>
+                <br>
+                <br>
+                <p>Garment type:</p>
 
-    <div class="form-check-inline">
-        <label for="all" class="form-check-label">
-            <input type="radio" class="form-check-input" checked=checked id="all" name="garment" value="">All types
-        </label>
-    </div>
-    {%for garment in garments: %}
-    <div class="form-check-inline">
-        <label class="form-check-label">
-            <input type="radio" class="form-check-input" id={{garment.garment}} name="garment" value={{garment.id}}>{{garment.garment|capitalize}}
-        </label>
-    </div>
+                <div class="form-check-inline">
+                    <label for="all" class="form-check-label">
+                        <input type="radio" class="form-check-input" checked=checked id="all" name="garment"
+                            value="">All types
+                    </label>
+                </div>
+                {%for garment in garments: %}
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" id={{garment.garment}} name="garment"
+                            value={{garment.id}}>{{garment.garment|capitalize}}
+                    </label>
+                </div>
 
-    {% endfor %}
-    <br>
-    <br>
-    <input type="submit" class="btn btn-secondary" value="Search">
-</form>
+                {% endfor %}
+                <br>
+                <br>
+                <input type="submit" class="btn btn-secondary" value="Search">
+            </form>
         </div>
 
-<div class="col-4">
+        <div class="col-4">
 
-<h4 class="text-muted">Placeholder</h4>
+            <h4 class="text-muted">Placeholder</h4>
 
-<p>In the future you'll be able to add personal notes to your library!</p>
+            <p>In the future you'll be able to add personal notes to your library!</p>
 
-{% endblock %}
+            {% endblock %}
         </div>
     </div>
 </div>

@@ -1,85 +1,88 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div class="container">
+<div class="container p-3">
     <div class="row">
         <div class="col-8">
 
-<h3>{{company|capitalize}}: {{pattern_name|capitalize}}</h3>
+            <h3>{{company|capitalize}}: {{pattern_name|capitalize}}</h3>
 
-<p>Fabric type: {{fabric}}</p>
+            <p>Fabric type: {{fabric}}</p>
 
-<p>Garment type: {% for garment in garments: %}
-                    {{garment.garment}}
-                    {% if not loop.last %}
-                    ,
-                    {% endif %}
-                    {% endfor %}</p>
+            <p>Garment type: {% for garment in garments: %}
+                {{garment.garment}}
+                {% if not loop.last %}
+                ,
+                {% endif %}
+                {% endfor %}</p>
 
-{% if not in_my_patterns %}
+            {% if not in_my_patterns %}
 
-<form action="/add_to_my_patterns", method="POST">
-    <input type="hidden" name="pattern_id" value={{pattern_id}}>
-    <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
-    <input type=submit type="button" class="btn btn-secondary" value="Add to my patterns">
-</form>
+            <form action="/add_to_my_patterns" , method="POST">
+                <input type="hidden" name="pattern_id" value={{pattern_id}}>
+                <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
+                <input type=submit type="button" class="btn btn-secondary" value="Add to my patterns">
+            </form>
 
-{% else %}
+            {% else %}
 
-<form action="/delete_from_my_patterns", method="POST">
-    <input type="hidden" name="pattern_id" value={{pattern_id}}>
-    <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
-    <input type=submit class="btn btn-secondary" value="Delete from my patterns">
-</form>
+            <form action="/delete_from_my_patterns" , method="POST">
+                <input type="hidden" name="pattern_id" value={{pattern_id}}>
+                <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
+                <input type=submit class="btn btn-secondary" value="Delete from my patterns">
+            </form>
 
-{% endif %}
+            {% endif %}
 
-<br>
-<h4>Reviews: </h4>
+            <br>
+            <h5>Reviews: </h5>
 
-{% if not reviews %}
+            {% if not reviews %}
 
-<p>There are no reviews for this pattern yet.</p>
+            <p>There are no reviews for this pattern yet.</p>
 
-{% else %}
+            {% else %}
 
-{% for review in reviews: %}
-{{review.username}} wrote on {{review.date}}: <br>
-{{review.review}}
-<br>
+            {% for review in reviews: %}
+            <span class="border">
+                {{review.username}} wrote on {{review.date}}:
+            </span><br>
+            {{review.review}}
+            <br>
 
-{% if session.user_id == review.user_id %}
-<br>
+            {% if session.user_id == review.user_id %}
+            <br>
 
-<form action="/edit_review", method="POST">
-    <input type="hidden" name="csrf_token" value={{session.csrf_token}}>
-    <input type="hidden" name="review_id" value={{review.id}}>
-    <input type="hidden" name="review" value={{review.review}}>
-    <input type=submit class="btn btn-primary btn-xs" value="Edit review">
-</form>
-<br>
-<form action="/delete_review", method="POST">
-    <input type="hidden" name="csrf_token" value={{session.csrf_token}}>
-    <input type="hidden" name="review_id" value={{review.id}}>
-    <input type=submit class="btn btn-primary btn-xs" value="Delete review">
-</form>
-<br>
-{% endif %}
-<br>
-{% endfor %}
+            <div class="btn-toolbar" role="toolbar">
+                <form action="/edit_review" , method="POST">
+                    <input type="hidden" name="csrf_token" value={{session.csrf_token}}>
+                    <input type="hidden" name="review_id" value={{review.id}}>
+                    <input type="hidden" name="review" value={{review.review}}>
+                    <input type=submit class="btn btn-primary btn-xs" value="Edit review">
+                </form>
+                <form action="/delete_review" , method="POST">
+                    <input type="hidden" name="csrf_token" value={{session.csrf_token}}>
+                    <input type="hidden" name="review_id" value={{review.id}}>
+                    <input type=submit class="btn btn-primary btn-xs" value="Delete review">
+                </form>
+            </div>
+            <br>
+            {% endif %}
+            <br>
+            {% endfor %}
 
-{% endif %}
+            {% endif %}
 
-{{error_message}}
+            {{error_message}}
 
-<form action="{{url_for('pattern_page', pattern_id=pattern_id)}}" method="POST">
-    <div class="form-group">
-        <input type="hidden" name="csrf_token" value={{session.csrf_token}}>
-        <label for="review">Review this pattern:</label><br>
-        <textarea class="form-control" id="review" name="review" rows="5" cols="45"></textarea><br>
-        <input type="submit" class="btn btn-secondary" value="Submit review">
-    </div>
-</form>
+            <form action="{{url_for('pattern_page', pattern_id=pattern_id)}}" method="POST">
+                <div class="form-group">
+                    <input type="hidden" name="csrf_token" value={{session.csrf_token}}>
+                    <label for="review">Review this pattern:</label><br>
+                    <textarea class="form-control" id="review" name="review" rows="5" cols="45"></textarea><br>
+                    <input type="submit" class="btn btn-secondary" value="Submit review">
+                </div>
+            </form>
 
         </div>
     </div>

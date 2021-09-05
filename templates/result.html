@@ -1,38 +1,33 @@
 {% extends "layout.html" %}
 
-<div class="container">
+<div class="container p-3">
     <div class="row">
         <div class="col-8">
 
-{% block content %}
+            {% block content %}
 
-{% if not results %}
+            {% if not results %}
 
-<p>Unfortunately there were no patterns matching your search. Please try a different <a href="/search">search</a> or <a href="/add_pattern"> add a new pattern to the database</a>. </p>
+            <p>Unfortunately there were no patterns matching your search. Please try a different <a
+                    href="/search">search</a> or <a href="/add_pattern"> add a new pattern to the database</a>. </p>
 
-{% else %}
+            {% else %}
 
-{% if total == 1 %}
+            {% if total == 1 %}
+            <p>There is {{total}} pattern matching your search:</p>
+            {% else %}
+            <p>There are {{total}} patterns matching your search:</p>
+            {% endif %}
+            <ul>
+                {% for result in results: %}
+                <li><a href="/pattern/{{result.id}}">{{result.company|capitalize}}: {{result.name|capitalize}}</a></li>
+            </ul>
+            {% endfor %}
 
-<p>There is {{total}} pattern matching your search:</p>
+            <p>Not the right pattern? <a href="/add_pattern"> Try adding a new pattern to the database.</a> </p>
 
-{% else %}
-
-<p>There are {{total}} patterns matching your search:</p>
-
-{% endif %}
-<ul>
-{% for result in results: %}
-
-<li><a href="/pattern/{{result.id}}">{{result.company|capitalize}}: {{result.name|capitalize}}</a></li>
-
-{% endfor %}
-</ul>
-
-<p>Not the right pattern? <a href="/add_pattern"> Try adding a new pattern to the database.</a> </p>
-
-{% endif %}
-{% endblock%}
+            {% endif %}
+            {% endblock%}
 
         </div>
     </div>

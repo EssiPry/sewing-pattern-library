@@ -1,33 +1,36 @@
 <!DOCTYPE html>
+
 <head>
-    <title>The Sewing Pattern Library </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <title>The Sewing Pattern Library </title>
 </head>
 
 <body>
-<div class="container">
-    <nav class="navbar navbar-expand-sm bg-light sticky-top">
-        <a class="navbar-brand" href="/">Sewing Pattern Library</a>
-        <ul class="navbar-nav">
-{% if not session.user_id %}
+    <nav class="navbar navbar-expand-sm bg-light">
+        <div class="container">
+            <nav class="navbar navbar-expand-sm bg-light">
+                <a class="navbar-brand" href="/">Sewing Pattern Library</a>
+                <ul class="navbar-nav">
+                    {% if not session.user_id %}
 
-<li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
 
-<li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                    {% else %}
 
-{% else %}
+                    <li class="nav-item"><a class="nav-link" href="/search">Pattern search</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/add_pattern">Add a pattern</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/my_patternlibrary">My patterns</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
 
-<li class="nav-item"><a class="nav-link" href="/search">Pattern search</a></li>
-<li class="nav-item"><a class="nav-link" href="/add_pattern">Add a pattern</a></li>
-<li class="nav-item"><a class="nav-link" href="/my_patternlibrary">My patterns</a></li>
-<li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                    {% endif %}
 
-{% endif %}
+                </ul>
+        </div>
+    </nav>
 
-    </ul>
-</nav>
-{% block content %}{% endblock %}
+    {% block content %}{% endblock %}
 
 </body>
