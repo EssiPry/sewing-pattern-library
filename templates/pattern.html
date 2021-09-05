@@ -21,7 +21,7 @@
             <form action="/add_to_my_patterns" , method="POST">
                 <input type="hidden" name="pattern_id" value={{pattern_id}}>
                 <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
-                <input type=submit type="button" class="btn btn-secondary" value="Add to my patterns">
+                <input type=submit type="button" class="btn btn-primary" value="Add to my patterns">
             </form>
 
             {% else %}
@@ -29,7 +29,7 @@
             <form action="/delete_from_my_patterns" , method="POST">
                 <input type="hidden" name="pattern_id" value={{pattern_id}}>
                 <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
-                <input type=submit class="btn btn-secondary" value="Delete from my patterns">
+                <input type=submit class="btn btn-outline-danger" value="Delete from my patterns">
             </form>
 
             {% endif %}
@@ -44,10 +44,8 @@
             {% else %}
 
             {% for review in reviews: %}
-                {{review.username}} wrote on {{review.date}}:
-            <br>
-            {{review.review}}
-            <br>
+                <p class="font-italic">{{review.username}} wrote on {{review.date}}:</p>
+            <p class="p-1">{{review.review}}</p>
 
             {% if session.user_id == review.user_id %}
             <br>
