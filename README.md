@@ -18,13 +18,8 @@ Current test data for patterns include patterns named B6354, B6414, 6808, Moneta
 - personal pattern library page
 - save & delete patterns from your personal library
 
-### Things to add & update:
-
-- look & feel of the app: bootstrap
-- clarity to error messages
-- add pre-populated forms when something goes wrong with suitable error messages
-
 ### Possible future features:
 
 - add personal notes to patterns in your library
 - search personal pattern library
+- add pictures to patterns
