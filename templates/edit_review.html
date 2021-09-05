@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-8">
             <h5>Edit your review:</h5>
-            {{error_message}}
+            <p class="text-danger">{{error_message}}</p>
             <form action="update_review" method="POST">
                 <div class="form-group">
                     <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">

@@ -57,7 +57,7 @@ def register():
         if users.register(username, password):
             return redirect("/login")
         return render_template(
-            "register.html", error_message="The username is already in use. Please choose a different name.")
+            "register.html", error_message="The username is already in use. Please choose a different username.")
     return render_template("register.html")
 
 @app.route("/search", methods=["GET", "POST"])
@@ -93,16 +93,15 @@ def add_pattern():
                 user_id = users.get_user_id()
                 my_patterns.add_to_my_patterns(user_id, pattern_id)
                 return render_template(
-                    "add_pattern.html", message="Pattern "
+                    "add_pattern.html", error_message="Pattern "
                     + pattern_name.capitalize() +
                     " added to the library & your patterns.", garments=garments)
             return render_template(
-                "add_pattern.html", message="Please check that the pattern "
-                + pattern_name.capitalize() +
-                " is not already in the database.", garments=garments)
+                "add_pattern.html", error_message="The pattern " + pattern_name.capitalize() +
+                " is already in the database. Please use a unique name or code", garments=garments)
         return render_template(
             "add_pattern.html",
-            message="Please fill in all fields and select at least one garment type",
+            error_message="Please fill in all fields and select at least one garment type.",
             garments=garments)
     return render_template("add_pattern.html", garments=garments)
 

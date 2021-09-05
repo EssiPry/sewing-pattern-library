@@ -6,10 +6,9 @@
 
             <h5>Add a pattern to the Sewing Pattern Library:</h5>
 
-            {%if message %}
+            {%if error_message %}
             <br>
-            {{message}}
-            <br>
+            <p class="text-danger">{{error_message}}</p>
             {% endif %}
             <br>
             <form action="/add_pattern" method="POST">

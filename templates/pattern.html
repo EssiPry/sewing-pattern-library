@@ -73,7 +73,7 @@
 
             {% endif %}
 
-            {{error_message}}
+            <p class="text-danger">{{error_message}}</p>
 
             <form action="{{url_for('pattern_page', pattern_id=pattern_id)}}" method="POST">
                 <div class="form-group">
