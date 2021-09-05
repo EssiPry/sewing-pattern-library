@@ -17,8 +17,8 @@
          {% endif %}
 
       </div>
-      <div class="col-3">
-         <h5 class="text-center text-muted">Sewing Pattern Library in numbers</h5>
+      <div class="col-3" >
+         <h5 class="text-center">Sewing Pattern Library in numbers</h5>
          <p> {{patterns}} different patterns from {{companies}}
             {% if companies == 1 %}
             company
@@ -39,6 +39,11 @@
             <li>{{top.name|capitalize}} - {{top[1]}} reviews </li>
          </ul>
          {% endfor %}
+
+         <div style="font-size: x-small;">Icons made by <a href="https://www.freepik.com"
+            title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"
+            title="Flaticon">www.flaticon.com</a></div>
+
       </div>
    </div>
 </div>
