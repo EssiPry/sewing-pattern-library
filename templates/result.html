@@ -1,10 +1,8 @@
 {% extends "layout.html" %}
-
+{% block content %}
 <div class="container p-3">
     <div class="row">
         <div class="col-8">
-
-            {% block content %}
 
             {% if not results %}
 
@@ -21,14 +19,14 @@
             <ul>
                 {% for result in results: %}
                 <li><a href="/pattern/{{result.id}}">{{result.company|capitalize}}: {{result.name|capitalize}}</a></li>
+                {% endfor %}
             </ul>
-            {% endfor %}
 
             <p>Not the right pattern? <a href="/add_pattern"> Try adding a new pattern to the database.</a> </p>
 
             {% endif %}
-            {% endblock%}
 
         </div>
     </div>
 </div>
+{% endblock%}
