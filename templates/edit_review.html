@@ -10,11 +10,13 @@
                 <div class="form-group">
                     <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
                     <input type="hidden" name="review_id" value={{review_id}}>
+                    <input type="hidden" name="pattern_id" value={{pattern_id}}>
                     <textarea class="form-control" id="review" name="review" rows="5"
                         cols="45">{{review}}</textarea><br>
                     <input type="submit" class="btn btn-secondary" value="Save edited review">
                 </div>
             </form>
+            <a class="btn btn-secondary" href="{{url_for('pattern_page', pattern_id=pattern_id)}}" role="button">Cancel</a>
         </div>
     </div>
 </div>

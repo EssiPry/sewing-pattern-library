@@ -44,9 +44,8 @@
             {% else %}
 
             {% for review in reviews: %}
-            <span class="border">
                 {{review.username}} wrote on {{review.date}}:
-            </span><br>
+            <br>
             {{review.review}}
             <br>
 
@@ -56,19 +55,18 @@
             <div class="btn-toolbar" role="toolbar">
                 <form action="/edit_review" , method="POST">
                     <input type="hidden" name="csrf_token" value={{session.csrf_token}}>
+                    <input type="hidden" name="pattern_id" value={{pattern_id}}>
                     <input type="hidden" name="review_id" value={{review.id}}>
-                    <input type="hidden" name="review" value={{review.review}}>
-                    <input type=submit class="btn btn-primary btn-xs" value="Edit review">
+                    <input type=submit class="btn btn-outline-primary btn-xs" value="Edit review">
                 </form>
                 <form action="/delete_review" , method="POST">
                     <input type="hidden" name="csrf_token" value={{session.csrf_token}}>
                     <input type="hidden" name="review_id" value={{review.id}}>
-                    <input type=submit class="btn btn-primary btn-xs" value="Delete review">
+                    <input type=submit class="btn btn-outline-primary btn-xs" value="Delete review">
                 </form>
             </div>
             <br>
             {% endif %}
-            <br>
             {% endfor %}
 
             {% endif %}

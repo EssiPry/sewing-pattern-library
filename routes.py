@@ -1,6 +1,6 @@
 from functools import wraps
 from app import app
-from flask import render_template, request, redirect, session
+from flask import render_template, request, redirect, url_for, session
 import users
 import sewingpatterns
 import reviews
@@ -172,8 +172,9 @@ def delete_review():
 def edit_review():
     users.check_csrf(request.form["csrf_token"])
     review_id = request.form["review_id"]
+    pattern_id = request.form["pattern_id"]
     review = reviews.get_review_text(review_id)
-    return render_template("edit_review.html", review_id=review_id, review=review)
+    return render_template("edit_review.html", review_id=review_id, review=review, pattern_id=pattern_id)
 
 @app.route("/update_review", methods=["POST"])
 def update_review():
@@ -185,4 +186,5 @@ def update_review():
             "edit_review.html", review_id=review_id, review=review,
             error_message="Please don't leave a blank review")
     reviews.update_review(review_id, review)
-    return redirect("/my_patternlibrary")
+    pattern_id = request.form["pattern_id"]
+    return redirect(url_for('pattern_page', pattern_id=pattern_id))
